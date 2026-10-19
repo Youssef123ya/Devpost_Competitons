@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-06-02T20:17:05.255909",
+  "vitals": {
+    "HR": null,
+    "SpO2": null,
+    "etCO2": null,
+    "Pulse": null,
+    "RR": null,
+    "Temp": null
+  },
+  "confidence": {
+    "HR": 0.85,
+    "SpO2": 0.85,
+    "etCO2": 0.85,
+    "Pulse": 0.85,
+    "RR": 0.85,
+    "Temp": 0.85
+  }
+}

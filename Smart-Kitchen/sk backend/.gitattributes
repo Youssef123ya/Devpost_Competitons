@@ -1,0 +1,6 @@
+# Stored as normal files in this collection repository.
+*.csv text
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary

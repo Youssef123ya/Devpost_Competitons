@@ -1,0 +1,9 @@
+=== NEW NETWORK CONFIGURATION ===
+Computer IP: 192.168.1.4
+Backend Port: 5140
+OCR Service Port: 8000
+
+Backend API URL: http://192.168.1.4:5140
+OCR API URL: http://192.168.1.4:8000
+
+IMPORTANT: Make sure your mobile device is connected to the SAME Wi-Fi network

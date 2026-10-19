@@ -1,0 +1,14 @@
+# Backend Migration Commands
+# Run these commands in the backend directory to apply the Notification schema
+
+# Step 1: Create migration
+dotnet ef migrations add AddNotificationSystem --project MedMonitor.csproj
+
+# Step 2: Apply migration to database
+dotnet ef database update --project MedMonitor.csproj
+
+# After running these commands, the Notifications table will be created with:
+# - Id (PK)
+# - NurseId (FK to User)
+# - Title, TaskName, PatientName, StartTime, EndTime, Note
+# - IsRead, CreatedAt

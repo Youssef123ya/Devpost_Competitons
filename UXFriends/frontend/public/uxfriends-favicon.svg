@@ -1,0 +1,21 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="uxfriends-favicon-gradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#14B8A6"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#uxfriends-favicon-gradient)"/>
+  <text
+    x="32"
+    y="39"
+    text-anchor="middle"
+    fill="white"
+    font-family="Inter Variable, Inter, Arial, sans-serif"
+    font-size="22"
+    font-weight="700"
+    letter-spacing="-1.4"
+  >
+    UX
+  </text>
+</svg>

@@ -1,0 +1,91 @@
+# ---------------------------------------------------------------
+# Smart Kitchen - repository ignore rules
+# ---------------------------------------------------------------
+
+# === Secrets / local configuration =============================
+# Real credentials live here - keep them out of version control.
+appsettings.json
+appsettings.*.json
+!appsettings.Development.json
+*.env
+.env
+.env.*
+secrets.json
+
+# === .NET backend ==============================================
+bin/
+obj/
+publish/
+*.user
+*.suo
+*.cache
+.vs/
+
+# === SQL Server database backup (557 MB, over GitHub limits) ===
+backup sk
+*.bak
+
+# === Generated / downloaded media ==============================
+# 16k+ recipe images and uploads are runtime data, not source.
+**/images/ingredient/
+**/images/recipe/
+**/images/step/
+**/wwwroot/uploads/
+
+# === Python service ============================================
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv311/
+venv/
+env/
+
+# Downloaded dataset images + generated progress metadata
+python_service/dataset/images/
+python_service/dataset/metadata/progress.json
+
+# === Flutter / Dart ============================================
+build/
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.pub-cache/
+.pub/
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# === IDE / editor ==============================================
+.idea/
+.vscode/
+*.swp
+*~
+
+# === OS ========================================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# === Raw source dataset (not in repo) ==========================
+# "RAW_recipes after cleaning.csv" (~234 MB) exists here only as an
+# orphaned Git LFS pointer - its content was never fetched from the
+# upstream repo, so it cannot be pushed. Obtain it separately and
+# place it at the path configured under Datasets:RecipeCsvPath.
+RAW_recipes after cleaning.csv

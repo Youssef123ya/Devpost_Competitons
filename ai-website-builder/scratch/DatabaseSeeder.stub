@@ -1,0 +1,815 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        DB::table('heroes')->insert(array (
+  'id' => 1,
+  'user_id' => 1,
+  'layout_style' => 'centered',
+  'title' => 'Crafting Scalable Solutions with Code',
+  'subtitle' => 'Full-stack developer specializing in efficient, maintainable web applications',
+  'description' => 'With 5+ years building cloud-native applications, I deliver robust backend systems and seamless frontend integrations. Let’s build something remarkable together.',
+  'background_image' => 'https://picsum.photos/seed/laptop/1200/800',
+  'cta_text' => 'Start Collaborating',
+  'cta_url' => '#',
+  'cta_2_text' => 'View Portfolio',
+  'cta_2_url' => NULL,
+  'cta_3_text' => NULL,
+  'cta_3_url' => NULL,
+  'button_text' => NULL,
+  'created_at' => '2026-06-13 18:41:18',
+  'updated_at' => '2026-06-13 18:43:19',
+  'generated_code' => '<div class="w-full h-full bg-white rounded-lg shadow-lg overflow-hidden relative group hero-preview-wrapper">
+    <div class="absolute top-0 left-0 w-full h-8 bg-slate-800 flex items-center px-4 gap-2 z-50 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+    </div>
+    <div class="w-full h-full overflow-y-auto custom-scrollbar hero-preview-content">
+        <div class="w-full h-full bg-white rounded-lg shadow-lg overflow-hidden relative group hero-preview-wrapper">
+    <div class="absolute top-0 left-0 w-full h-8 bg-slate-800 flex items-center px-4 gap-2 z-50 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+    </div>
+    <div class="w-full h-full overflow-y-auto custom-scrollbar hero-preview-content">
+        <section class="hero" style="position: relative; padding: 80px 5% 60px; background-image: url(&quot;&quot;); min-height: 56vh; background-size: 100%; background-repeat: no-repeat; background-position: center center; --hero-title: #006eff;" https:="" picsum.photos="" seed="" laptop="" 1200="" 800");="" background-size:="" cover;="" background-position:="" center;="" background-repeat:="" no-repeat;"="">
+&gt;
+  <div class="hero-bg" style="position: absolute; inset: 0px; background-image: none; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255); z-index: 1;"><div class="hero-bg-image" style="position: absolute; inset: 0px; z-index: 1; pointer-events: none; background-image: url(&quot;https://picsum.photos/seed/laptop/1200/800&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; opacity: 0.1; filter: none;" data-original-bg-image="https://picsum.photos/seed/laptop/1200/800"></div></div>
+  <div class="hero-content" style="max-width:900px;margin:0 auto;text-align:center; position: relative; z-index: 2;">
+    <h1 class="hero-title" style="color: rgb(0, 110, 255); font-size: 48px; margin-bottom: 0.5rem;">Crafting Scalable Solutions with Code</h1>
+    <p class="hero-subtitle" style="color: rgb(55, 65, 81); margin-bottom: 1rem; font-size: 24px;">Full-stack developer specializing in efficient, maintainable web applications</p>
+    <p class="hero-description" style="color: rgb(75, 85, 99); margin-bottom: 32px; font-size: 18px;">With 5+ years building cloud-native applications, I deliver robust backend systems and seamless frontend integrations. Let’s build something remarkable together.</p>
+    <a href="#" class="hero-button" style="background: #3b82f6; color: #ffffff; padding: 12px 22px; border-radius:8px; text-decoration:none; font-weight:700; display:inline-block;">Start Collaborating</a>
+  </div>
+</section>
+    </div>
+</div>
+    </div>
+</div>',
+  'custom_styles' => '{"bg_color":"#ffffff","title_color":"#006eff","subtitle_color":"#374151","description_color":"#4b5563","button_bg_color":"#3b82f6","button_text_color":"#ffffff","title_size":"48","subtitle_size":"24","description_size":"18","description_padding":"32","padding":"56","width":80,"image_size":"100","bg_opacity":"10","bg_blur":"0","overlay_color":"#000000","overlay_opacity":"0","gradient_from_color":"#000000","gradient_to_color":"#ffffff","gradient_opacity":"0","gradient_angle":"180"}',
+));
+
+        DB::table('navbars')->insert(array (
+  'hero_id' => 1,
+  'layout_style' => 'centered',
+  'links_data' => '[{"title":"Home","url":"\\/"}]',
+  'logo_image' => NULL,
+  'logo_text' => '',
+  'buttons_data' => '[{"text":"","url":"#","is_external":false}]',
+  'custom_styles' => '{"bg_color":"#ffffff","nav_bg_color":"#ffffff","link_color":"#1a1a1a","link_bg_color":"#6366f1","btn_bg_color":"#6366f1","btn_text_color":"#ffffff","link_size":14,"logo_size":40,"padding":16}',
+  'generated_code' => '
+            <style>
+                .nav-item { 
+                    position: relative;
+                    color: #1a1a1a; 
+                    text-decoration: none; 
+                    font-size: 14px; 
+                    font-weight: 600; 
+                    padding: 4px 0;
+                    transition: all 0.3s ease;
+                }
+                .nav-item::after {
+                    content: \'\';
+                    position: absolute;
+                    width: 0;
+                    height: 2px;
+                    bottom: -2px;
+                    left: 50%;
+                    background-color: #6366f1;
+                    transition: all 0.3s ease;
+                    transform: translateX(-50%);
+                }
+                .nav-item:hover::after { width: 100%; }
+                .nav-item:hover { opacity: 0.8; }
+                .cta-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+                #mobile-menu {
+                    position: fixed;
+                    top: 0;
+                    right: -100%;
+                    width: 100%;
+                    height: 100vh;
+                    background: white;
+                    z-index: 999;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 2rem;
+                    transition: 0.4s ease-in-out;
+                }
+                #mobile-menu.active { right: 0; }
+                .hamburger { cursor: pointer; display: none; z-index: 1001; }
+                
+                @media (max-width: 1024px) {
+                    .desktop-links, .desktop-cta { display: none !important; }
+                    .hamburger { display: block !important; }
+                }
+            </style>
+            <nav id=\'dynamic-navbar\' style=\'background: transparent; padding: 1.25rem 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);\'>
+                <div id=\'logo-container\' style=\'flex: 1; display: flex; justify-content: flex-start;\'>
+                    
+                </div>
+                <div class=\'desktop-links\' style=\'flex: 1; display: flex; justify-content: center;\'>
+                    <div id=\'links-container\' style=\'display: flex; gap: 1.5rem;\'>
+                        <a href=\'/\' class=\'nav-item\'>Home</a>
+                    </div>
+                </div>
+                <div id=\'buttons-container\' class=\'desktop-cta\' style=\'flex: 1; display: flex; justify-content: flex-end;\'>
+                    
+                </div>
+                <div class=\'hamburger\' id=\'hamburger-btn\'>
+                    <svg width=\'30\' height=\'30\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#1a1a1a\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'>
+                        <line x1=\'3\' y1=\'12\' x2=\'21\' y2=\'12\'></line>
+                        <line x1=\'3\' y1=\'6\' x2=\'21\' y2=\'6\'></line>
+                        <line x1=\'3\' y1=\'18\' x2=\'21\' y2=\'18\'></line>
+                    </svg>
+                </div>
+            </nav>
+
+            <div id=\'mobile-menu\'>
+                <div style=\'display: flex; flex-direction: column; align-items: center; gap: 2rem;\'>
+                    <a href=\'/\' class=\'nav-item\'>Home</a>
+                    <div style=\'margin-top: 1rem;\'>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const nav = document.getElementById(\'dynamic-navbar\');
+                const hamburger = document.getElementById(\'hamburger-btn\');
+                const mobileMenu = document.getElementById(\'mobile-menu\');
+
+                window.addEventListener(\'scroll\', function() {
+                    if (window.scrollY > 20) {
+                        nav.style.background = \'#ffffff\';
+                        nav.style.boxShadow = \'0 10px 15px -3px rgba(0, 0, 0, 0.1)\';
+                        nav.style.padding = \'0.8rem 5%\';
+                    } else {
+                        nav.style.background = \'transparent\';
+                        nav.style.boxShadow = \'none\';
+                        nav.style.padding = \'1.25rem 5%\';
+                    }
+                });
+
+                hamburger.addEventListener(\'click\', () => {
+                    mobileMenu.classList.toggle(\'active\');
+                    const isOpen = mobileMenu.classList.contains(\'active\');
+                    hamburger.innerHTML = isOpen ? 
+                        `<svg width=\'30\' height=\'30\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#1a1a1a\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><line x1=\'18\' y1=\'6\' x2=\'6\' y2=\'18\'></line><line x1=\'6\' y1=\'6\' x2=\'18\' y2=\'18\'></line></svg>` :
+                        `<svg width=\'30\' height=\'30\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#1a1a1a\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><line x1=\'3\' y1=\'12\' x2=\'21\' y2=\'12\'></line><line x1=\'3\' y1=\'6\' x2=\'21\' y2=\'6\'></line><line x1=\'3\' y1=\'18\' x2=\'21\' y2=\'18\'></line></svg>`;
+                });
+            </script>',
+  'created_at' => '2026-06-13 18:41:33',
+  'updated_at' => '2026-06-13 18:41:35',
+));
+
+        DB::table('service_sections')->insert(array (
+  'hero_id' => 1,
+  'title' => 'Professional Services',
+  'subtitle' => 'What we offer',
+  'services_data' => '[{"title":"Strategic Consulting","description":"Expert guidance to navigate complex industry challenges.","icon":"fa-solid fa-lightbulb"},{"title":"Custom Solutions","description":"Tailored implementations designed specifically for your goals.","icon":"fa-solid fa-layer-group"},{"title":"Performance Optimization","description":"Enhancing efficiency and maximizing your operational output.","icon":"fa-solid fa-gauge-high"},{"title":"Ongoing Support","description":"Dedicated assistance to ensure long-term sustained success.","icon":"fa-solid fa-headset"}]',
+  'layout_style' => 'cards',
+  'generated_code' => '<section id="services" class="py-24 px-8 relative" style="background-color:#ffffff; font-family:\'Plus Jakarta Sans\',sans-serif;">
+    <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="text-center mb-16">
+                <h2 class="section-title text-4xl md:text-5xl font-black mb-4" style="color:#0f172a;">Professional Services</h2>
+                <div class="mx-auto h-1.5 w-16 rounded-full mb-4" style="background:#6366f1;"></div>
+                <p class="section-subtitle text-lg opacity-80" style="color:#0f172a;">What we offer</p>
+            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                        <div class="service-card w-full min-w-0 flex flex-col items-start text-left p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group border border-slate-100 overflow-hidden" data-service-index="0"
+                 style="background-color:#f9fafb; border-radius:16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                                <div class="service-icon-container mb-6 rounded-lg flex items-center justify-center w-12 h-12 shadow-md transition-transform duration-300 group-hover:scale-110" 
+                     style="background-color:#6366f1;">
+                    <i class="fa-solid fa-lightbulb" style="color:#ffffff; font-size:18px;"></i>
+                </div>
+                <h3 class="service-title text-xl font-bold mb-3 tracking-tight w-full" style="color:#0f172a; word-break: break-all;">Strategic Consulting</h3>
+                <p class="service-description leading-relaxed text-sm opacity-80 mb-6 overflow-hidden w-full" 
+                   style="color:#0f172a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-all; transition: all 0.3s ease;">Expert guidance to navigate complex industry challenges.</p>
+                <div class="mt-auto read-more-wrapper" style="display: none; width: 100%;">
+                    <div class="read-more-btn text-sm font-bold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer" 
+                         onclick="toggleReadMore(this)" style="color:#0f172a;">
+                        <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-right text-[10px] transition-transform"></i>
+                    </div>
+                </div>
+            </div>            <div class="service-card w-full min-w-0 flex flex-col items-start text-left p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group border border-slate-100 overflow-hidden" data-service-index="1"
+                 style="background-color:#f9fafb; border-radius:16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                                <div class="service-icon-container mb-6 rounded-lg flex items-center justify-center w-12 h-12 shadow-md transition-transform duration-300 group-hover:scale-110" 
+                     style="background-color:#6366f1;">
+                    <i class="fa-solid fa-layer-group" style="color:#ffffff; font-size:18px;"></i>
+                </div>
+                <h3 class="service-title text-xl font-bold mb-3 tracking-tight w-full" style="color:#0f172a; word-break: break-all;">Custom Solutions</h3>
+                <p class="service-description leading-relaxed text-sm opacity-80 mb-6 overflow-hidden w-full" 
+                   style="color:#0f172a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-all; transition: all 0.3s ease;">Tailored implementations designed specifically for your goals.</p>
+                <div class="mt-auto read-more-wrapper" style="display: none; width: 100%;">
+                    <div class="read-more-btn text-sm font-bold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer" 
+                         onclick="toggleReadMore(this)" style="color:#0f172a;">
+                        <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-right text-[10px] transition-transform"></i>
+                    </div>
+                </div>
+            </div>            <div class="service-card w-full min-w-0 flex flex-col items-start text-left p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group border border-slate-100 overflow-hidden" data-service-index="2"
+                 style="background-color:#f9fafb; border-radius:16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                                <div class="service-icon-container mb-6 rounded-lg flex items-center justify-center w-12 h-12 shadow-md transition-transform duration-300 group-hover:scale-110" 
+                     style="background-color:#6366f1;">
+                    <i class="fa-solid fa-gauge-high" style="color:#ffffff; font-size:18px;"></i>
+                </div>
+                <h3 class="service-title text-xl font-bold mb-3 tracking-tight w-full" style="color:#0f172a; word-break: break-all;">Performance Optimization</h3>
+                <p class="service-description leading-relaxed text-sm opacity-80 mb-6 overflow-hidden w-full" 
+                   style="color:#0f172a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-all; transition: all 0.3s ease;">Enhancing efficiency and maximizing your operational output.</p>
+                <div class="mt-auto read-more-wrapper" style="display: none; width: 100%;">
+                    <div class="read-more-btn text-sm font-bold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer" 
+                         onclick="toggleReadMore(this)" style="color:#0f172a;">
+                        <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-right text-[10px] transition-transform"></i>
+                    </div>
+                </div>
+            </div>            <div class="service-card w-full min-w-0 flex flex-col items-start text-left p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group border border-slate-100 overflow-hidden" data-service-index="3"
+                 style="background-color:#f9fafb; border-radius:16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                                <div class="service-icon-container mb-6 rounded-lg flex items-center justify-center w-12 h-12 shadow-md transition-transform duration-300 group-hover:scale-110" 
+                     style="background-color:#6366f1;">
+                    <i class="fa-solid fa-headset" style="color:#ffffff; font-size:18px;"></i>
+                </div>
+                <h3 class="service-title text-xl font-bold mb-3 tracking-tight w-full" style="color:#0f172a; word-break: break-all;">Ongoing Support</h3>
+                <p class="service-description leading-relaxed text-sm opacity-80 mb-6 overflow-hidden w-full" 
+                   style="color:#0f172a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-all; transition: all 0.3s ease;">Dedicated assistance to ensure long-term sustained success.</p>
+                <div class="mt-auto read-more-wrapper" style="display: none; width: 100%;">
+                    <div class="read-more-btn text-sm font-bold flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer" 
+                         onclick="toggleReadMore(this)" style="color:#0f172a;">
+                        <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-right text-[10px] transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkReadMore() {
+            document.querySelectorAll(\'.service-card\').forEach(card => {
+                const desc = card.querySelector(\'.service-description\');
+                const wrapper = card.querySelector(\'.read-more-wrapper\');
+                if (desc && wrapper) {
+                    const isOverflowing = desc.scrollHeight > (desc.clientHeight + 2);
+                    wrapper.style.display = isOverflowing ? \'block\' : \'none\';
+                }
+            });
+        }
+
+        function toggleReadMore(btn) {
+            const card = btn.closest(\'.service-card\');
+            const desc = card.querySelector(\'.service-description\');
+            const icon = btn.querySelector(\'i\');
+            const text = btn.querySelector(\'.btn-text\');
+            const isExpanded = desc.style.webkitLineClamp === \'none\';
+            
+            if (isExpanded) {
+                desc.style.webkitLineClamp = \'3\';
+                desc.style.maxHeight = \'4.5em\';
+                text.textContent = \'Read More\';
+                if(icon) icon.style.transform = \'rotate(0deg)\';
+            } else {
+                desc.style.webkitLineClamp = \'none\';
+                desc.style.maxHeight = \'none\';
+                text.textContent = \'Read Less\';
+                if(icon) icon.style.transform = \'rotate(90deg)\';
+            }
+        }
+
+        window.addEventListener(\'load\', checkReadMore);
+        window.addEventListener(\'resize\', checkReadMore);
+        setTimeout(checkReadMore, 100);
+        setTimeout(checkReadMore, 500);
+        setTimeout(checkReadMore, 1000);
+    </script>
+</section>',
+  'custom_styles' => '{"bg_color":"#ffffff","card_bg_color":"#f9fafb","title_color":"#0f172a","subtitle_color":"#0f172a","service_title_color":"#0f172a","service_text_color":"#0f172a","accent_color":"#6366f1","icon_color":"#6366f1","box_shadow":"none"}',
+  'created_at' => '2026-06-13 20:56:39',
+  'updated_at' => '2026-06-13 20:56:42',
+));
+
+        DB::table('why_choose_us')->insert(array (
+  'hero_id' => 1,
+  'title' => 'Build Faster, Ship Cleaner, Scale Smarter',
+  'subtitle' => 'Developer-focused solutions that transform complex requirements into robust, deployable software.',
+  'description' => NULL,
+  'layout_style' => 'cards',
+  'reasons_data' => '[{"title":"Production-Ready Delivery","icon":"fa-solid fa-code","description":"Ship production-ready features with clean architecture, automated tests, and reliable deployment pipelines from commit one."},{"title":"Reusable Engineering","icon":"fa-solid fa-cubes","description":"Accelerate delivery with reusable components, modular APIs, and performance patterns that keep codebases maintainable daily."},{"title":"Resilient Quality Gates","icon":"fa-solid fa-shield-halved","description":"Reduce bugs through type safety, linting, CI checks, and observability designed for resilient systems always."},{"title":"Growth-Ready Architecture","icon":"fa-solid fa-diagram-project","description":"Scale applications with cloud-native infrastructure, caching strategies, and secure integrations built for growth without friction."}]',
+  'generated_code' => '<section id="why-choose-us" class="py-24 px-8 relative overflow-hidden" style="background-color: #ffffff; font-family: \'Plus Jakarta Sans\', sans-serif;">
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-black mb-6 leading-tight" style="color: #111827;">
+                        Build Faster, Ship Cleaner, Scale Smarter
+                    </h1>
+                    <div class="mx-auto h-1.5 w-16 rounded-full mb-6" style="background-color: #6366f1;"></div>
+                    <p class="text-lg leading-relaxed opacity-90" style="color: #4b5563;">
+                        Developer-focused solutions that transform complex requirements into robust, deployable software.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left items-start">
+                                    <div class="why-card flex items-start gap-4 p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] overflow-hidden shadow-md" style="background-color: #f9fafb; border-radius: 16px;">
+                    
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background-color: #6366f1;">
+                        <i class="fa-solid fa-code" style="color: #ffffff; font-size: 1.25rem;"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-xl font-bold mb-2" style="color: #111827; word-break: break-all;">Production-Ready Delivery</h3>
+                        
+                        <p class="why-description text-sm opacity-80 leading-relaxed overflow-hidden" style="color: #4b5563; text-transform: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-word; transition: all 0.3s ease;">
+                            Ship production-ready features with clean architecture, automated tests, and reliable deployment pipelines from commit one.
+                        </p>
+                        <div class="mt-2 why-read-more-wrapper" style="display: none;">
+                            <button type="button" onclick="toggleWhyReadMore(this)" class="text-xs font-bold flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity" style="color: #111827;">
+                                <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>                <div class="why-card flex items-start gap-4 p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] overflow-hidden shadow-md" style="background-color: #f9fafb; border-radius: 16px;">
+                    
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background-color: #6366f1;">
+                        <i class="fa-solid fa-cubes" style="color: #ffffff; font-size: 1.25rem;"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-xl font-bold mb-2" style="color: #111827; word-break: break-all;">Reusable Engineering</h3>
+                        
+                        <p class="why-description text-sm opacity-80 leading-relaxed overflow-hidden" style="color: #4b5563; text-transform: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-word; transition: all 0.3s ease;">
+                            Accelerate delivery with reusable components, modular APIs, and performance patterns that keep codebases maintainable daily.
+                        </p>
+                        <div class="mt-2 why-read-more-wrapper" style="display: none;">
+                            <button type="button" onclick="toggleWhyReadMore(this)" class="text-xs font-bold flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity" style="color: #111827;">
+                                <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>                <div class="why-card flex items-start gap-4 p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] overflow-hidden shadow-md" style="background-color: #f9fafb; border-radius: 16px;">
+                    
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background-color: #6366f1;">
+                        <i class="fa-solid fa-shield-halved" style="color: #ffffff; font-size: 1.25rem;"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-xl font-bold mb-2" style="color: #111827; word-break: break-all;">Resilient Quality Gates</h3>
+                        
+                        <p class="why-description text-sm opacity-80 leading-relaxed overflow-hidden" style="color: #4b5563; text-transform: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-word; transition: all 0.3s ease;">
+                            Reduce bugs through type safety, linting, CI checks, and observability designed for resilient systems always.
+                        </p>
+                        <div class="mt-2 why-read-more-wrapper" style="display: none;">
+                            <button type="button" onclick="toggleWhyReadMore(this)" class="text-xs font-bold flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity" style="color: #111827;">
+                                <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>                <div class="why-card flex items-start gap-4 p-6 rounded-2xl transition-all duration-300 hover:scale-[1.02] overflow-hidden shadow-md" style="background-color: #f9fafb; border-radius: 16px;">
+                    
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm" style="background-color: #6366f1;">
+                        <i class="fa-solid fa-diagram-project" style="color: #ffffff; font-size: 1.25rem;"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-xl font-bold mb-2" style="color: #111827; word-break: break-all;">Growth-Ready Architecture</h3>
+                        
+                        <p class="why-description text-sm opacity-80 leading-relaxed overflow-hidden" style="color: #4b5563; text-transform: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5; max-height: 4.5em; word-break: break-word; transition: all 0.3s ease;">
+                            Scale applications with cloud-native infrastructure, caching strategies, and secure integrations built for growth without friction.
+                        </p>
+                        <div class="mt-2 why-read-more-wrapper" style="display: none;">
+                            <button type="button" onclick="toggleWhyReadMore(this)" class="text-xs font-bold flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity" style="color: #111827;">
+                                <span class="btn-text">Read More</span> <i class="fa-solid fa-chevron-down text-[8px] transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <script>
+                (function() {
+                    function checkWhyOverflow() {
+                        document.querySelectorAll(\'.why-card\').forEach(card => {
+                            const desc = card.querySelector(\'.why-description\');
+                            const wrapper = card.querySelector(\'.why-read-more-wrapper\');
+                            if (desc && wrapper) {
+                                const isOverflowing = desc.scrollHeight > (desc.clientHeight + 2);
+                                wrapper.style.display = isOverflowing ? \'block\' : \'none\';
+                            }
+                        });
+                    }
+
+                    if (window.toggleWhyReadMore === undefined) {
+                        window.toggleWhyReadMore = function(btn) {
+                            const container = btn.closest(\'.why-card\');
+                            const desc = container.querySelector(\'.why-description\');
+                            const text = btn.querySelector(\'.btn-text\');
+                            const icon = btn.querySelector(\'i\');
+                            const isExpanded = desc.style.webkitLineClamp === \'none\';
+
+                            if (isExpanded) {
+                                desc.style.webkitLineClamp = \'3\';
+                                desc.style.maxHeight = \'4.5em\';
+                                text.textContent = \'Read More\';
+                                if(icon) icon.style.transform = \'rotate(0deg)\';
+                            } else {
+                                desc.style.webkitLineClamp = \'none\';
+                                desc.style.maxHeight = \'none\';
+                                text.textContent = \'Read Less\';
+                                if(icon) icon.style.transform = \'rotate(180deg)\';
+                            }
+                        }
+                    }
+
+                    checkWhyOverflow();
+                    window.addEventListener(\'resize\', checkWhyOverflow);
+                    setTimeout(checkWhyOverflow, 100);
+                    setTimeout(checkWhyOverflow, 500);
+                })();
+            </script>
+        </section>',
+  'custom_styles' => '{"bg_color":"#ffffff","card_bg_color":"#f9fafb","title_color":"#111827","subtitle_color":"#4b5563","reason_title_color":"#111827","reason_text_color":"#4b5563","icon_color":"#ffffff","icon_bg_color":"#6366f1","accent_line_color":"#6366f1","box_shadow":"md","border_radius":"16"}',
+  'created_at' => '2026-06-13 20:58:51',
+  'updated_at' => '2026-06-13 20:59:07',
+));
+
+        DB::table('work')->insert(array (
+  'hero_id' => 1,
+  'title' => 'Developer Portfolio Projects',
+  'subtitle' => 'Production-minded builds for scalable, maintainable software delivery.',
+  'description' => NULL,
+  'layout_style' => 'grid',
+  'items_data' => '[{"id":1,"image":"https:\\/\\/images.unsplash.com\\/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800","title":"Scalable API Platform","description":"Deployed a scalable API platform with automated tests, CI pipelines, observability, and documented developer onboarding.","live":"#"},{"id":2,"image":"https:\\/\\/images.unsplash.com\\/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800","title":"Real-Time Operations Dashboard","description":"Built a responsive dashboard reducing support triage time with real-time logs, filters, and role-based access.","live":"#"},{"id":3,"image":"https:\\/\\/images.unsplash.com\\/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800","title":"Frontend Refactor System","description":"Refactored legacy frontend code into reusable components, improving page speed, accessibility, and maintainable release cycles.","live":"#"}]',
+  'custom_styles' => NULL,
+  'generated_code' => '
+<section id="projects" style="background-color: #ffffff; padding-top: 80px; padding-bottom: 80px;" class="relative overflow-hidden font-sans">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        
+        <div class="text-center mb-24">
+            <h2 style="color: #0f172a; font-size: 48px;" class="font-black tracking-tight mb-6">Developer Portfolio Projects</h2>
+            <div style="background-color: #4f46e5;" class="w-24 h-2 mx-auto rounded-full mb-8"></div>
+            <p style=\'color: #64748b;\' class=\'text-xl max-w-2xl mx-auto font-medium\'>Production-minded builds for scalable, maintainable software delivery.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style="gap: 32px;">
+            
+                <div style="background-color: #ffffff; border-radius: 16px;" class="overflow-hidden shadow-sm h-full flex flex-col transition-all duration-500  animate-fade-in hover:shadow-xl hover:-translate-y-1">
+                    <div class="relative overflow-hidden aspect-video bg-slate-100 group/media cursor-zoom-in" 
+                         onclick="openWorkLightbox(\'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800\', false)">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" alt="Scalable API Platform" class="w-full h-full object-cover transition-transform duration-700 group-hover/media:scale-110">
+                        <div class="absolute inset-0 bg-black/5 opacity-0 group-hover/media:opacity-100 transition-opacity flex items-center justify-center">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col">
+                        <h3 style="color: #0f172a;" class="text-lg font-bold mb-2 tracking-tight truncate">Scalable API Platform</h3>
+                        <p style="color: #64748b;" class="text-sm leading-relaxed line-clamp-3 overflow-hidden opacity-80">Deployed a scalable API platform with automated tests, CI pipelines, observability, and documented developer onboarding.</p>
+                        <div class="mt-auto pt-6 flex gap-3 items-center flex-wrap"><a href="#" target="_blank" style="background-color: #4f46e5; color: #ffffff;" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold opacity-90 hover:opacity-100 transition-all">Live Demo</a></div>
+                    </div>
+                </div>
+                <div style="background-color: #ffffff; border-radius: 16px;" class="overflow-hidden shadow-sm h-full flex flex-col transition-all duration-500  animate-fade-in hover:shadow-xl hover:-translate-y-1">
+                    <div class="relative overflow-hidden aspect-video bg-slate-100 group/media cursor-zoom-in" 
+                         onclick="openWorkLightbox(\'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800\', false)">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Real-Time Operations Dashboard" class="w-full h-full object-cover transition-transform duration-700 group-hover/media:scale-110">
+                        <div class="absolute inset-0 bg-black/5 opacity-0 group-hover/media:opacity-100 transition-opacity flex items-center justify-center">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col">
+                        <h3 style="color: #0f172a;" class="text-lg font-bold mb-2 tracking-tight truncate">Real-Time Operations Dashboard</h3>
+                        <p style="color: #64748b;" class="text-sm leading-relaxed line-clamp-3 overflow-hidden opacity-80">Built a responsive dashboard reducing support triage time with real-time logs, filters, and role-based access.</p>
+                        <div class="mt-auto pt-6 flex gap-3 items-center flex-wrap"><a href="#" target="_blank" style="background-color: #4f46e5; color: #ffffff;" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold opacity-90 hover:opacity-100 transition-all">Live Demo</a></div>
+                    </div>
+                </div>
+                <div style="background-color: #ffffff; border-radius: 16px;" class="overflow-hidden shadow-sm h-full flex flex-col transition-all duration-500  animate-fade-in hover:shadow-xl hover:-translate-y-1">
+                    <div class="relative overflow-hidden aspect-video bg-slate-100 group/media cursor-zoom-in" 
+                         onclick="openWorkLightbox(\'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800\', false)">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800" alt="Frontend Refactor System" class="w-full h-full object-cover transition-transform duration-700 group-hover/media:scale-110">
+                        <div class="absolute inset-0 bg-black/5 opacity-0 group-hover/media:opacity-100 transition-opacity flex items-center justify-center">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col">
+                        <h3 style="color: #0f172a;" class="text-lg font-bold mb-2 tracking-tight truncate">Frontend Refactor System</h3>
+                        <p style="color: #64748b;" class="text-sm leading-relaxed line-clamp-3 overflow-hidden opacity-80">Refactored legacy frontend code into reusable components, improving page speed, accessibility, and maintainable release cycles.</p>
+                        <div class="mt-auto pt-6 flex gap-3 items-center flex-wrap"><a href="#" target="_blank" style="background-color: #4f46e5; color: #ffffff;" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold opacity-90 hover:opacity-100 transition-all">Live Demo</a></div>
+                    </div>
+                </div>
+        </div>
+
+        
+
+    </div>
+
+    
+    <!-- Noir Lightbox Edition - Source of Truth -->
+    <div id="work-lightbox" class="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-xl hidden justify-center items-center opacity-0 transition-opacity duration-500 ease-in-out cursor-zoom-out" onclick="window.closeWorkLightbox()">
+        
+        <button class="absolute top-8 right-8 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all duration-300 z-[1000000] border border-white/10" onclick="window.closeWorkLightbox()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <div id="lightbox-media-wrapper" class="relative flex items-center justify-center transition-all duration-500 ease-out scale-90 opacity-0" onclick="event.stopPropagation()" style="width:auto; height:auto; max-width:85vw; max-height:80vh;">
+            <div id="lightbox-media-container" class="rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] bg-black/40">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.openWorkLightbox = function(src, isVideo) {
+            const lightbox = document.getElementById("work-lightbox");
+            const container = document.getElementById("lightbox-media-container");
+            const wrapper = document.getElementById("lightbox-media-wrapper");
+            if (!lightbox || !container || !wrapper) return;
+
+            // CRITICAL FIX: Move to body to escape preview canvas CSS transforms
+            if (lightbox.parentNode !== document.body) {
+                document.body.appendChild(lightbox);
+            }
+
+            container.innerHTML = "";
+            lightbox.classList.remove("hidden");
+            lightbox.classList.add("flex");
+            
+            setTimeout(() => {
+                lightbox.style.opacity = "1";
+                wrapper.classList.remove("scale-90", "opacity-0");
+                wrapper.classList.add("scale-100", "opacity-100");
+                
+                container.innerHTML = isVideo 
+                    ? `<video src="${src}" controls autoplay loop style="max-width:80vw; max-height:75vh; display:block; border-radius:2.5rem;"></video>`
+                    : `<img src="${src}" style="max-width:80vw; max-height:75vh; object-fit:contain; display:block; border-radius:2.5rem;">`;
+            }, 50);
+            document.body.style.overflow = "hidden";
+        };
+
+        window.closeWorkLightbox = function() {
+            const lightbox = document.getElementById("work-lightbox");
+            const wrapper = document.getElementById("lightbox-media-wrapper");
+            if (!lightbox || !wrapper) return;
+            
+            lightbox.style.opacity = "0";
+            wrapper.classList.add("scale-90", "opacity-0");
+            wrapper.classList.remove("scale-100", "opacity-100");
+            
+            setTimeout(() => {
+                lightbox.classList.add("hidden");
+                lightbox.classList.remove("flex");
+                document.getElementById("lightbox-media-container").innerHTML = "";
+                document.body.style.overflow = "";
+            }, 500);
+        };
+    </script>
+    <style>
+        .cursor-zoom-in { cursor: zoom-in; }
+    </style>
+</section>',
+  'created_at' => '2026-06-13 21:02:08',
+  'updated_at' => '2026-06-13 21:02:11',
+));
+
+        DB::table('skill_sections')->insert(array (
+  'hero_id' => 1,
+  'layout_style' => 'grid-layout',
+  'section_title' => 'Core Competencies',
+  'section_subtitle' => 'Tools & technologies I work with every day',
+  'skills_data' => '[{"name":"JavaScript","icon":"fa-brands fa-js","description":"Building interactive and dynamic user experiences with modern ES6+ features.","level":100},{"name":"HTML & CSS","icon":"fa-solid fa-code","description":"Crafting semantic, accessible, and responsive web interfaces with pixel-perfect precision.","level":100},{"name":"Frontend Architecture","icon":"fa-solid fa-layer-group","description":"Designing scalable and maintainable client-side applications.","level":100},{"name":"React \\/ Vue","icon":"fa-brands fa-react","description":"Developing scalable single-page applications with component-based frameworks.","level":100},{"name":"TypeScript","icon":"fa-solid fa-file-code","description":"Writing strongly typed, reliable code that minimizes runtime errors.","level":100},{"name":"Database Design","icon":"fa-solid fa-database","description":"Structuring efficient relational and NoSQL databases for optimal performance.","level":100}]',
+  'custom_styles' => '{"bg_color":"#ffffff","card_bg_color":"#f8fafc","skill_text_color":"#0f172a","skill_desc_color":"#64748b","progress_bg_color":"#8b5cf6","icon_color":"#6366f1","icon_bg_color":"#eff6ff","icon_size":22,"circle_size":54,"border_radius":"10","desc_size":14}',
+  'generated_code' => '<section class="py-24 px-8 relative" style="background-color:#ffffff; font-family:\'Plus Jakarta Sans\',sans-serif;">
+    <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="text-center mb-16">
+                <h2 class="section-title text-4xl md:text-5xl font-black mb-4" style="color:#0f172a;">Core Competencies</h2>
+                <div class="mx-auto h-1.5 w-16 rounded-full mb-4" style="background:#8b5cf6;"></div>
+                <p class="text-lg opacity-80" style="color:#64748b;">Tools &amp; technologies I work with every day</p>
+            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-brands fa-js\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-brands fa-js" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">JavaScript</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Building interactive and dynamic user experiences with modern ES6+ features.</p>
+            </div>            <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-solid fa-code\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-solid fa-code" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">HTML &amp; CSS</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Crafting semantic, accessible, and responsive web interfaces with pixel-perfect precision.</p>
+            </div>            <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-solid fa-layer-group\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-solid fa-layer-group" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">Frontend Architecture</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Designing scalable and maintainable client-side applications.</p>
+            </div>            <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-brands fa-react\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-brands fa-react" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">React / Vue</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Developing scalable single-page applications with component-based frameworks.</p>
+            </div>            <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-solid fa-file-code\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-solid fa-file-code" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">TypeScript</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Writing strongly typed, reliable code that minimizes runtime errors.</p>
+            </div>            <div class="skill-card flex flex-col items-center text-center p-8 bg-white border border-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group cursor-zoom-in" 
+                  style="background-color:#f8fafc; border-radius:10px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);"
+                  onclick="openSkillsLightbox(\'fa-solid fa-database\', false, true)">
+                                <div class="skill-icon-container mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110" 
+                     style="background:#eff6ff; width:54px; height:54px;">
+                    <i class="fa-solid fa-database" style="color:#6366f1; font-size:22px;"></i>
+                </div>
+                <h3 class="skill-name text-xl font-bold mb-3 tracking-tight" style="color:#0f172a;">Database Design</h3>
+                <p class="skill-desc leading-relaxed" style="color:#64748b; font-size:14px; opacity:0.9;">Structuring efficient relational and NoSQL databases for optimal performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Noir Lightbox Edition (Skills) - Source of Truth -->
+    <div id="skills-lightbox" class="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-xl hidden justify-center items-center opacity-0 transition-opacity duration-500 ease-in-out cursor-zoom-out" onclick="window.closeSkillsLightbox()">
+        
+        <button class="absolute top-8 right-8 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all duration-300 z-[1000000] border border-white/10" onclick="window.closeSkillsLightbox()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <div id="skills-lightbox-wrapper" class="relative flex items-center justify-center transition-all duration-500 ease-out scale-90 opacity-0" onclick="event.stopPropagation()" style="width:auto; height:auto; max-width:85vw; max-height:80vh;">
+            <div id="skills-lightbox-media-container" class="rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] bg-black/40">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.openSkillsLightbox = function(src, isVideo, isIcon = false) {
+            const lightbox = document.getElementById("skills-lightbox");
+            const container = document.getElementById("skills-lightbox-media-container");
+            const wrapper = document.getElementById("skills-lightbox-wrapper");
+            if (!lightbox || !container || !wrapper) return;
+
+            // CRITICAL FIX: Move to body to escape preview canvas CSS transforms
+            if (lightbox.parentNode !== document.body) {
+                document.body.appendChild(lightbox);
+            }
+
+            container.innerHTML = "";
+            lightbox.classList.remove("hidden");
+            lightbox.classList.add("flex");
+            
+            setTimeout(() => {
+                lightbox.style.opacity = "1";
+                wrapper.classList.remove("scale-90", "opacity-0");
+                wrapper.classList.add("scale-100", "opacity-100");
+                
+                if (isIcon) {
+                    container.innerHTML = `<div class="p-20 bg-white/5 backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl flex items-center justify-center"><i class="${src} text-8xl text-white"></i></div>`;
+                } else {
+                    container.innerHTML = isVideo 
+                        ? `<video src="${src}" controls autoplay loop style="max-width:80vw; max-height:75vh; display:block; border-radius:2.5rem;"></video>`
+                        : `<img src="${src}" style="max-width:80vw; max-height:75vh; object-fit:contain; display:block; border-radius:2.5rem;">`;
+                }
+            }, 50);
+            document.body.style.overflow = "hidden";
+        };
+
+        window.closeSkillsLightbox = function() {
+            const lightbox = document.getElementById("skills-lightbox");
+            const wrapper = document.getElementById("skills-lightbox-wrapper");
+            if (!lightbox || !wrapper) return;
+            
+            lightbox.style.opacity = "0";
+            wrapper.classList.add("scale-90", "opacity-0");
+            wrapper.classList.remove("scale-100", "opacity-100");
+            
+            setTimeout(() => {
+                lightbox.classList.add("hidden");
+                lightbox.classList.remove("flex");
+                document.getElementById("skills-lightbox-media-container").innerHTML = "";
+                document.body.style.overflow = "";
+            }, 500);
+        };
+    </script>
+    <style>
+        .cursor-zoom-in { cursor: zoom-in; }
+    </style>',
+  'created_at' => '2026-06-13 18:48:05',
+  'updated_at' => '2026-06-13 18:48:06',
+));
+
+        DB::table('contact_sections')->insert(array (
+  'hero_id' => 1,
+  'title' => 'Connect with a Developer',
+  'subtitle' => 'Let\'s build something great together',
+  'description' => NULL,
+  'created_at' => '2026-06-14 00:11:15',
+  'updated_at' => '2026-06-14 00:11:18',
+  'form_fields' => '{"email":"on","phone":"on","location":"on","show_social_links":"on","make_rounded":"off"}',
+  'ctas' => '[{"text":"View My Portfolio","url":"#"}]',
+  'social_links' => '[{"icon":"fab fa-github","url":"#"},{"url":"#"}]',
+  'layout_style' => 'premium-layout',
+  'custom_styles' => '{"location":null,"phone_number":null,"email_address":null,"display_mode":"full-section"}',
+  'generated_code' => '
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<section id="contact" class="py-24 relative overflow-hidden" style="background:#ffffff; font-family:\'Plus Jakarta Sans\', sans-serif;">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+            <!-- Left: Info -->
+            <div class="space-y-12">
+                <div>
+                    <h2 class="font-black mb-8 leading-tight" style="color:#0f172a; font-size:48px;">Connect with a Developer</h2>
+                    <p class="text-lg opacity-60 leading-relaxed max-w-lg mb-10" style="color:#0f172a;">Let\'s build something great together</p>
+                </div>
+                
+                <div class="space-y-10">
+                    
+            <div class="flex items-center gap-6 group">
+                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl text-white shadow-md transition-transform group-hover:scale-110" style="background:#4f46e5;"><i class="fa-solid fa-envelope"></i></div>
+                <div><p class="font-bold text-lg mb-0.5" style="color:#0f172a;">Email</p><p class="text-sm opacity-60" style="color:#0f172a;">info@yourdomain.com</p></div>
+            </div>
+            <div class="flex items-center gap-6 group">
+                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl text-white shadow-md transition-transform group-hover:scale-110" style="background:#4f46e5;"><i class="fa-solid fa-phone"></i></div>
+                <div><p class="font-bold text-lg mb-0.5" style="color:#0f172a;">Phone</p><p class="text-sm opacity-60" style="color:#0f172a;">(+62) 81 414 257 9980</p></div>
+            </div>
+            <div class="flex items-center gap-6 group">
+                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl text-white shadow-md transition-transform group-hover:scale-110" style="background:#4f46e5;"><i class="fa-solid fa-location-dot"></i></div>
+                <div><p class="font-bold text-lg mb-0.5" style="color:#0f172a;">Location</p><p class="text-sm opacity-60" style="color:#0f172a;">99 S.t Jomblo Park Pekanbaru 28292. Indonesia</p></div>
+            </div>
+                    <div class="mt-4"><p class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-5 pl-1">Follow & Connect</p><div class="flex flex-wrap gap-4">
+            <a href="#" id="social_6a2df1a618fc3_0" class="w-12 h-12 flex items-center justify-center rounded-xl transition-all shadow-sm border border-slate-100 hover:scale-110 active:scale-[0.8]" style="background-color: #4f46e5; color: #ffffff;">
+                <style>
+                    #social_6a2df1a618fc3_0:hover { background-color: #0f172a !important; color: white !important; border-color: #0f172a !important; }
+                </style>
+                <i class="fab fa-github text-xl"></i>
+            </a>
+            <a href="#" id="social_6a2df1a618fc3_1" class="w-12 h-12 flex items-center justify-center rounded-xl transition-all shadow-sm border border-slate-100 hover:scale-110 active:scale-[0.8]" style="background-color: #4f46e5; color: #ffffff;">
+                <style>
+                    #social_6a2df1a618fc3_1:hover { background-color: #0f172a !important; color: white !important; border-color: #0f172a !important; }
+                </style>
+                <i class="fab fa-github text-xl"></i>
+            </a></div></div>
+                </div>
+            </div>
+
+            <!-- Right: Form Card -->
+            <div class="relative">
+                <div class="rounded-xl p-10 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-slate-100 relative z-10">
+                    <form class="space-y-6" onsubmit="event.preventDefault();">
+                        <div><label class="block text-sm font-medium mb-2" style="color:#1e293b;">Email</label><input type="email" placeholder="example@email.com" class="w-full px-4 py-3 rounded-xl border-0 outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500 transition-all font-medium" style="background:#ffffff; color:#1e293b;"></div><div><label class="block text-sm font-medium mb-2" style="color:#1e293b;">Phone Number</label><input type="tel" placeholder="+1 (555) 000-0000" class="w-full px-4 py-3 rounded-xl border-0 outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500 transition-all font-medium" style="background:#ffffff; color:#1e293b;"></div><div><label class="block text-sm font-medium mb-2" style="color:#1e293b;">Message</label><textarea rows="4" placeholder="How can we help you?" class="w-full px-4 py-3 rounded-xl border-0 outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-indigo-500 transition-all font-medium resize-none shadow-sm" style="background:#ffffff; color:#1e293b; text-align: left;"></textarea></div>
+                        <button type="button" class="w-full py-4.5 rounded-xl text-white font-extrabold text-lg transition-all shadow-lg hover:shadow-xl active:scale-[0.98] mt-4" style="background:#4f46e5;">View My Portfolio</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>',
+));
+
+        DB::table('footer_sections')->insert(array (
+  'hero_id' => 1,
+  'title' => 'DevNexus Studio',
+  'slogan' => 'From Concept to Commit: Crafting Code that Powers Tomorrow',
+  'links' => '[{"text":"Home","url":"\\/"}]',
+  'buttons' => NULL,
+  'social_links' => '[{"icon":"fa-brands fa-facebook-f","url":null}]',
+  'layout_style' => 'simple',
+  'custom_styles' => '{"bg_color":"#ffffff","nav_bg_color":"#f9fafb","link_color":"#1f2937","link_hover_bg":"#6366f1"}',
+  'generated_code' => NULL,
+  'created_at' => '2026-06-14 00:12:50',
+  'updated_at' => '2026-06-14 00:12:50',
+));
+
+    }
+}

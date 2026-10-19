@@ -1,0 +1,263 @@
+﻿Added BedNumber column
+=== SCENARIO 1: Normal -> Critical ===
+
+(0 rows affected)
+PatientAlertStates BEFORE:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+Notifications Max BEFORE:
+MaxId
+-----
+1202
+REQUEST 1 BODY:
+{
+    "FallDetected":  false,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  80,
+    "SpO2":  98,
+    "HeartRate":  72,
+    "SystolicBP":  120,
+    "Temperature":  36.8
+}
+RESPONSE 1:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Normal",
+                 "confidence":  95.0,
+                 "reason":  "All vital signs are within normal range.",
+                 "predictionTime":  "2026-06-19T14:14:19.9573168Z",
+                 "abnormalVitals":  [
+                                        "All vital signs are within normal range."
+                                    ],
+                 "abnormalCount":  1
+             }
+}
+REQUEST 2 BODY:
+{
+    "FallDetected":  true,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  40,
+    "SpO2":  82,
+    "HeartRate":  160,
+    "SystolicBP":  70,
+    "Temperature":  40
+}
+RESPONSE 2:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Critical",
+                 "confidence":  96.5,
+                 "reason":  "Critical hypoxemia detected: SpO2 82% (Normal: 95-100%). Severe tachycardia detected: Heart Rate 160 bpm (Normal: 60-100 bpm). Severe hypotension detected: Systolic BP 70 mmHg (Normal: 90-120 mmHg). High fever detected: Temperature 40°C (Critical: \u003e39.5°C). Patient fall detected with abnormal vital response.",
+                 "predictionTime":  "2026-06-19T14:14:19.9743273Z",
+                 "abnormalVitals":  [
+                                        "Critical hypoxemia detected: SpO2 82% (Normal: 95-100%).",
+                                        "Severe tachycardia detected: Heart Rate 160 bpm (Normal: 60-100 bpm).",
+                                        "Severe hypotension detected: Systolic BP 70 mmHg (Normal: 90-120 mmHg).",
+                                        "High fever detected: Temperature 40°C (Critical: \u003e39.5°C).",
+                                        "Patient fall detected with abnormal vital response."
+                                    ],
+                 "abnormalCount":  5
+             }
+}
+PatientAlertStates AFTER:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+2|test-patient-001|1|critical|2026-06-19 14:14:19.9759236
+Notifications Max AFTER:
+MaxId
+-----
+1205
+
+=== SCENARIO 2: Critical -> Critical ===
+
+(1 rows affected)
+PatientAlertStates BEFORE:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+2|test-patient-001|1|Critical|2026-06-19 14:14:20.2766667
+Notifications Max BEFORE:
+MaxId
+-----
+1205
+REQUEST 1 BODY:
+{
+    "FallDetected":  false,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  45,
+    "SpO2":  80,
+    "HeartRate":  150,
+    "SystolicBP":  75,
+    "Temperature":  39.8
+}
+RESPONSE 1:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Critical",
+                 "confidence":  96.5,
+                 "reason":  "Critical hypoxemia detected: SpO2 80% (Normal: 95-100%). Severe tachycardia detected: Heart Rate 150 bpm (Normal: 60-100 bpm). Severe hypotension detected: Systolic BP 75 mmHg (Normal: 90-120 mmHg). High fever detected: Temperature 39.8°C (Critical: \u003e39.5°C).",
+                 "predictionTime":  "2026-06-19T14:14:20.4175731Z",
+                 "abnormalVitals":  [
+                                        "Critical hypoxemia detected: SpO2 80% (Normal: 95-100%).",
+                                        "Severe tachycardia detected: Heart Rate 150 bpm (Normal: 60-100 bpm).",
+                                        "Severe hypotension detected: Systolic BP 75 mmHg (Normal: 90-120 mmHg).",
+                                        "High fever detected: Temperature 39.8°C (Critical: \u003e39.5°C)."
+                                    ],
+                 "abnormalCount":  4
+             }
+}
+REQUEST 2 BODY:
+{
+    "FallDetected":  false,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  45,
+    "SpO2":  80,
+    "HeartRate":  150,
+    "SystolicBP":  75,
+    "Temperature":  39.8
+}
+RESPONSE 2:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Critical",
+                 "confidence":  96.5,
+                 "reason":  "Critical hypoxemia detected: SpO2 80% (Normal: 95-100%). Severe tachycardia detected: Heart Rate 150 bpm (Normal: 60-100 bpm). Severe hypotension detected: Systolic BP 75 mmHg (Normal: 90-120 mmHg). High fever detected: Temperature 39.8°C (Critical: \u003e39.5°C).",
+                 "predictionTime":  "2026-06-19T14:14:20.4247985Z",
+                 "abnormalVitals":  [
+                                        "Critical hypoxemia detected: SpO2 80% (Normal: 95-100%).",
+                                        "Severe tachycardia detected: Heart Rate 150 bpm (Normal: 60-100 bpm).",
+                                        "Severe hypotension detected: Systolic BP 75 mmHg (Normal: 90-120 mmHg).",
+                                        "High fever detected: Temperature 39.8°C (Critical: \u003e39.5°C)."
+                                    ],
+                 "abnormalCount":  4
+             }
+}
+PatientAlertStates AFTER:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+2|test-patient-001|1|Critical|2026-06-19 14:14:20.2766667
+Notifications Max AFTER:
+MaxId
+-----
+1205
+
+=== SCENARIO 3: Critical -> Normal ===
+
+(1 rows affected)
+PatientAlertStates BEFORE:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+2|test-patient-001|1|Critical|2026-06-19 14:14:20.6066667
+Notifications Max BEFORE:
+MaxId
+-----
+1205
+REQUEST BODY:
+{
+    "FallDetected":  false,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  78,
+    "SpO2":  97,
+    "HeartRate":  75,
+    "SystolicBP":  118,
+    "Temperature":  36.7
+}
+RESPONSE:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Normal",
+                 "confidence":  95.0,
+                 "reason":  "All vital signs are within normal range.",
+                 "predictionTime":  "2026-06-19T14:14:20.8117365Z",
+                 "abnormalVitals":  [
+                                        "All vital signs are within normal range."
+                                    ],
+                 "abnormalCount":  1
+             }
+}
+PatientAlertStates AFTER:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+2|test-patient-001|0|normal|2026-06-19 14:14:20.8136886
+Notifications Max AFTER:
+MaxId
+-----
+1205
+
+=== SCENARIO 4: Normal -> Critical again ===
+
+(1 rows affected)
+PatientAlertStates BEFORE:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+Notifications Max BEFORE:
+MaxId
+-----
+1205
+REQUEST NORMAL BODY:
+{
+    "FallDetected":  false,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  80,
+    "SpO2":  98,
+    "HeartRate":  72,
+    "SystolicBP":  120,
+    "Temperature":  36.8
+}
+RESPONSE NORMAL:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Normal",
+                 "confidence":  95.0,
+                 "reason":  "All vital signs are within normal range.",
+                 "predictionTime":  "2026-06-19T14:14:21.1190579Z",
+                 "abnormalVitals":  [
+                                        "All vital signs are within normal range."
+                                    ],
+                 "abnormalCount":  1
+             }
+}
+REQUEST CRITICAL BODY:
+{
+    "FallDetected":  true,
+    "PatientName":  "TestPatient",
+    "DiastolicBP":  40,
+    "SpO2":  82,
+    "HeartRate":  160,
+    "SystolicBP":  70,
+    "Temperature":  40
+}
+RESPONSE CRITICAL:
+{
+    "success":  true,
+    "data":  {
+                 "alertLevel":  "Critical",
+                 "confidence":  96.5,
+                 "reason":  "Critical hypoxemia detected: SpO2 82% (Normal: 95-100%). Severe tachycardia detected: Heart Rate 160 bpm (Normal: 60-100 bpm). Severe hypotension detected: Systolic BP 70 mmHg (Normal: 90-120 mmHg). High fever detected: Temperature 40°C (Critical: \u003e39.5°C). Patient fall detected with abnormal vital response.",
+                 "predictionTime":  "2026-06-19T14:14:21.1248745Z",
+                 "abnormalVitals":  [
+                                        "Critical hypoxemia detected: SpO2 82% (Normal: 95-100%).",
+                                        "Severe tachycardia detected: Heart Rate 160 bpm (Normal: 60-100 bpm).",
+                                        "Severe hypotension detected: Systolic BP 70 mmHg (Normal: 90-120 mmHg).",
+                                        "High fever detected: Temperature 40°C (Critical: \u003e39.5°C).",
+                                        "Patient fall detected with abnormal vital response."
+                                    ],
+                 "abnormalCount":  5
+             }
+}
+PatientAlertStates AFTER:
+Id|PatientId|IsAlertActive|LastAlertLevel|LastAlertSentAt
+--|---------|-------------|--------------|---------------
+3|test-patient-001|1|critical|2026-06-19 14:14:21.1264995
+Notifications Max AFTER:
+MaxId
+-----
+1208
+
+All scenarios completed.
+

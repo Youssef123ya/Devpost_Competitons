@@ -1,0 +1,3 @@
+# Dependency overrides are not needed for objective_c in this project.
+# Remove this override to avoid forcing an iOS/macOS-only package.
+dependency_overrides:

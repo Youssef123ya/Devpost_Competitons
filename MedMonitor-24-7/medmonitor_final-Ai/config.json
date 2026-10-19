@@ -1,0 +1,33 @@
+{
+  "model_name": "MedMonitor ICU Alert System",
+  "version": "3.0 Final",
+  "description": "Random Forest pipeline for ICU patient alert classification",
+  "features": [
+    "Heart Rate (bpm)",
+    "SpO2 Level (%)",
+    "Systolic Blood Pressure (mmHg)",
+    "Diastolic Blood Pressure (mmHg)",
+    "Body Temperature (°C)",
+    "Pulse_Pressure",
+    "MAP",
+    "Fall_Encoded"
+  ],
+  "alert_classes": [
+    "Critical",
+    "Normal",
+    "Warning"
+  ],
+  "accuracy": 0.9452,
+  "f1_macro": 0.8683,
+  "roc_auc": 0.9895,
+  "recall_critical": 0.9567,
+  "override_rules": [
+    "SpO2 < 95% cannot be classified as Normal",
+    "Only 1 abnormal vital cannot be classified as Critical"
+  ],
+  "icu_monitor_support": [
+    "Fahrenheit temperature auto-converted to Celsius",
+    "Accepts both short and full feature key names"
+  ],
+  "trained_on": "2026-05-02T14:41:32.283541"
+}

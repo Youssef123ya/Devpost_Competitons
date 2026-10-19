@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: uxfriends-ai
+    runtime: docker
+    repo: https://github.com/Mhanedrgb/UXFriends-main
+    branch: master
+    plan: free
+    dockerfilePath: backend/uxfriends_ai_service/Dockerfile
+    dockerContext: backend/uxfriends_ai_service
+    envVars:
+      - key: AI_PROVIDER
+        value: heuristic
+
+  - type: web
+    name: uxfriends-main
+    runtime: docker
+    repo: https://github.com/Mhanedrgb/UXFriends-main
+    branch: master
+    plan: free
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DatabaseProvider
+        value: Sqlite
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__Issuer
+        value: UXFriendsAPI
+      - key: Jwt__Audience
+        value: UXFriendsClient
+      - key: Email__Mode
+        value: Development
+      - key: AI__CoachServiceUrl
+        fromService:
+          type: web
+          name: uxfriends-ai
+          property: hostport

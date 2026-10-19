@@ -1,0 +1,74 @@
+name: flutter_trial
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^1.2.1
+  shared_preferences: ^2.2.2
+
+  # Social login packages
+  google_sign_in: ^6.1.0
+  flutter_facebook_auth: ^6.0.0
+
+  # Firebase
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/logo.png
+    - assets/images/unsplash1.png
+    - assets/images/unsplash2.png
+    - assets/images/unsplash3.png
+    - assets/images/profile.png
+    - assets/images/icons/saved.png
+    - assets/images/icons/activity.png
+    - assets/images/icons/manage.png
+    - assets/images/icons/settings.png
+    - assets/images/icons/message.png
+    - assets/images/icons/google.png
+    - assets/images/icons/facebook.png
+    - assets/images/icons/ai.png
+    - assets/images/icons/chat.png
+    - assets/images/icons/vegetarian.png
+    - assets/images/icons/nonvegetarian.png
+    - assets/images/icons/vegan.png
+    - assets/images/icons/keto.png
+    - assets/images/icons/low carb.png
+    - assets/images/icons/paleo.png
+    - assets/images/icons/dairy.png
+    - assets/images/icons/gluten.png
+    - assets/images/icons/garlic.png
+    - assets/images/icons/onion.png
+    - assets/images/icons/egg.png
+    - assets/images/icons/soy.png
+    - assets/images/icons/fish.png
+    - assets/images/icons/seafood.png
+    - assets/images/icons/nuts.png
+    - assets/images/icons/mushroom.png
+    - assets/images/icons/success.png
+    - assets/images/Rava Dosa.png
+    - assets/images/Chicken Curry.png
+    - assets/images/Caesar Salad.png
+    - assets/images/Thick Corn Soup.png
+    - assets/images/Egg Salad.png
+    - assets/images/Carrot Cake.png
+    - assets/images/Beetroot Soup.png
+    - assets/images/introducing.png
+
+

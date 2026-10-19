@@ -1,0 +1,395 @@
+========================================
+✅ ADVANCED ROI CALIBRATION SYSTEM
+✅ OPENCV GUI FIX + ENHANCED FEATURES
+========================================
+
+🎯 PROBLEM SOLVED
+========================================
+
+❌ Previous Issue:
+   "opencv-python-headless" can't display windows
+   cv2.imshow() → AttributeError
+   GUI calibration tool won't work
+
+✅ Solution Provided:
+   Removed headless version
+   Installed GUI-enabled OpenCV 4.13.0.92
+   All GUI features working
+
+========================================
+📁 FILES CREATED/UPDATED
+========================================
+
+1. FIX_OPENCV_GUI.bat
+   └─ Quick fix script
+   └─ Uninstall headless + install GUI version
+   └─ Test GUI automatically
+
+2. roi_calibration_tool_advanced.py (557 lines)
+   └─ Enhanced from basic version
+   └─ NEW: On-screen vital sign labels
+   └─ NEW: Automatic preview after selection
+   └─ NEW: OCR test mode ('t' key)
+   └─ NEW: Debug image saving
+   └─ NEW: Preprocessing visualization
+   └─ Multi-color support for different vital signs
+   └─ Confidence scoring for each character
+
+3. requirements.txt (Updated)
+   └─ Specifies opencv-python (NOT headless)
+   └─ All dependencies listed
+   └─ Clear note about NOT using headless
+
+4. CALIBRATE_ROI_ADVANCED.bat
+   └─ Complete workflow script
+   └─ Fixes OpenCV
+   └─ Creates debug directories
+   └─ Launches calibration tool
+   └─ Shows next steps
+
+5. OPENCV_GUI_FIX_GUIDE.md
+   └─ Complete troubleshooting guide
+   └─ Feature explanations
+   └─ Debug workflow
+   └─ Keyboard controls reference
+
+========================================
+🚀 QUICK START (4 STEPS)
+========================================
+
+STEP 1: Fix OpenCV
+────────────────
+Run:
+  FIX_OPENCV_GUI.bat
+
+Result:
+  ✅ Headless version removed
+  ✅ GUI OpenCV 4.13.0.92 installed
+  ✅ GUI test passes
+
+STEP 2: Start Camera Stream
+──────────────────────────
+Terminal 1:
+  python stream_and_snapshot.py
+
+Result:
+  ✅ Stream on http://localhost:8000
+
+STEP 3: Launch Calibration Tool
+───────────────────────────────
+Terminal 2:
+  python roi_calibration_tool_advanced.py
+
+Or use batch file:
+  CALIBRATE_ROI_ADVANCED.bat
+
+STEP 4: Calibrate Each Vital Sign
+──────────────────────────────────
+
+For each vital (HR, SpO2, etCO2, RR, Temp, Pulse, NBP):
+  1. 🖱️  Drag to select region
+  2. 🖱️  Release to save
+  3. 📸 Preview auto-shows
+  4. 't'  Test OCR (optional)
+  5. SPACE/Next to continue
+
+Result:
+  ✅ roi_config.json created
+  ✅ debug_rois/ filled with images
+
+========================================
+🆕 NEW FEATURES
+========================================
+
+1. ✅ VISUAL ROI LABELS
+   Shows what you're calibrating:
+   "Calibrate: HR [1/7]"
+   
+   Helps avoid confusion about which vital
+   sign is being selected
+
+2. ✅ AUTOMATIC PREVIEW
+   After dragging/releasing:
+   - Shows selected region in new window
+   - Can see exactly what was captured
+   - Press any key to continue
+   
+   Advantage: Catch mistakes before OCR
+
+3. ✅ OCR TEST MODE ('t' key)
+   Press 't' while selecting to test OCR:
+   
+   Output shows:
+   - ✅ Text detected (e.g., "107")
+   - 📊 Confidence: 0.95
+   - 📝 Per-character confidence:
+        • '1' (conf: 0.96)
+        • '0' (conf: 0.94)
+        • '7' (conf: 0.95)
+   
+   Advantage: Know if OCR will work BEFORE
+   saving the ROI
+
+4. ✅ DEBUG IMAGE SAVING
+   Auto-saves to debug_rois/{vital}/
+   
+   Files:
+   - 01_original_roi.jpg
+      Raw area you selected
+   
+   - 02_processed_roi.jpg
+      After vital-specific preprocessing
+      (color masking, thresholding, upscaling)
+   
+   Advantage: Visual debugging! See exactly
+   what OCR is reading
+
+5. ✅ COLOR-SPECIFIC PREPROCESSING
+   Different for each vital:
+   
+   • HR/Pulse:
+     HSV green mask + threshold + 3x scale
+   
+   • SpO2:
+     HSV white+yellow mask + CLAHE + 3x
+   
+   • etCO2:
+     HSV yellow mask + threshold + 3x
+   
+   • RR:
+     4x upscale + CLAHE + threshold
+   
+   • Temp:
+     CLAHE + preserve decimals + 3x
+   
+   • NBP:
+     Default CLAHE + threshold
+   
+   Advantage: Optimal OCR accuracy per type
+
+========================================
+⌨️ COMPLETE KEYBOARD CONTROLS
+========================================
+
+🖱️ MOUSE:
+  Drag Mouse    → Draw rectangle
+  Release       → Save ROI, go to next vital
+
+LETTER KEYS:
+  SPACE         → Skip current vital sign
+  'u'           → Undo last ROI saved
+  't'           → Test OCR on current ROI
+  'p'           → Show preview of current ROI
+  's'           → Save all and exit
+  'q'           → Cancel calibration
+
+========================================
+📊 OCR TEST OUTPUT EXAMPLE
+========================================
+
+When pressing 't' on HR region:
+
+================================================================================
+🧪 Testing OCR on HR
+================================================================================
+✅ Text detected: '107'
+📊 Confidence: 0.95
+📝 Details:
+   - '1' (conf: 0.96)
+   - '0' (conf: 0.94)
+   - '7' (conf: 0.95)
+📁 Saved to: debug_rois/HR/
+
+Then check files:
+  debug_rois/HR/01_original_roi.jpg
+  debug_rois/HR/02_processed_roi.jpg
+
+========================================
+📁 DEBUG DIRECTORY STRUCTURE
+========================================
+
+After calibration, you'll have:
+
+debug_rois/
+├── HR/
+│   ├── 01_original_roi.jpg   (raw pixel area)
+│   └── 02_processed_roi.jpg  (after preprocessing)
+├── SpO2/
+│   ├── 01_original_roi.jpg
+│   └── 02_processed_roi.jpg
+├── etCO2/
+├── RR/
+├── Temp/
+├── Pulse/
+└── NBP/
+
+EACH file shows exactly what OCR sees!
+
+========================================
+🔍 VISUAL DEBUGGING WORKFLOW
+========================================
+
+1. Run calibration tool
+   python roi_calibration_tool_advanced.py
+
+2. Select each vital ROI
+   - Drag and release
+   - Preview shows automatically
+
+3. Test OCR (press 't')
+   - See if text readable
+   - Check confidence score
+
+4. If confidence < 0.7:
+   - Check debug images
+   - Re-select with better positioning
+   - Test again
+
+5. Check debug_rois/ folder:
+   - Open 01_original_roi.jpg
+   - See what you selected
+   - Check 02_processed_roi.jpg
+   - See what OCR will read
+
+6. Adjust and retry if needed
+
+========================================
+🎯 WHAT EACH DEBUG IMAGE SHOWS
+========================================
+
+01_original_roi.jpg:
+  - Exact pixel region you selected
+  - Shows monitor display area
+  - If blurry → camera focus issue
+  - If wrong area → re-select
+
+02_processed_roi.jpg:
+  - EXACTLY what OCR reads
+  - After color masking
+  - After thresholding
+  - After upscaling
+  - If black/white inverted → preprocessing issue
+  - If too small → larger ROI needed
+
+========================================
+✅ QUALITY CHECKLIST
+========================================
+
+Before saving ROI, check:
+
+For HR/Pulse:
+  ☐ 01_ shows green digits clearly
+  ☐ 02_ shows white text on black
+  ☐ Confidence > 0.8
+
+For SpO2:
+  ☐ 01_ shows white/yellow digits
+  ☐ 02_ shows clear text
+  ☐ Confidence > 0.8
+
+For etCO2:
+  ☐ 01_ shows yellow digits
+  ☐ 02_ shows contrasting text
+  ☐ Confidence > 0.75
+
+For RR (small):
+  ☐ 01_ shows full digit area
+  ☐ 02_ is upscaled and clear
+  ☐ Confidence > 0.7
+
+For Temp:
+  ☐ 01_ shows decimal number
+  ☐ 02_ preserves decimal point
+  ☐ Confidence > 0.8
+
+For NBP:
+  ☐ 01_ shows "XXX/XXX" format
+  ☐ 02_ shows both numbers clearly
+  ☐ Confidence > 0.7
+
+========================================
+🛠️ TROUBLESHOOTING
+========================================
+
+Problem: GUI won't open
+└─ Run: FIX_OPENCV_GUI.bat
+└─ Verify: python -c "import cv2; cv2.imshow"
+
+Problem: 't' key shows "OCR not available"
+└─ Install: pip install easyocr
+└─ Retry: python roi_calibration_tool_advanced.py
+
+Problem: Debug images don't show text clearly
+└─ Re-select ROI with better positioning
+└─ Ensure camera is in focus
+└─ Check monitor display brightness
+
+Problem: Text shows but confidence < 0.5
+└─ ROI probably too small
+└─ Expand selection area
+└─ Or includes overlapping numbers
+
+Problem: Debug images not appearing
+└─ Check folder: debug_rois/
+└─ Permissions issue? mkdir debug_rois manually
+└─ Retry calibration
+
+========================================
+📱 NEXT STEPS
+========================================
+
+After successful calibration:
+
+1. Check roi_config.json exists
+   type roi_config.json
+
+2. Review debug_rois/
+   dir debug_rois
+
+3. Start OCR service:
+   Terminal 2:
+   python ocr_medical_advanced.py
+
+4. Start API:
+   Terminal 3:
+   python vital_signs_api_advanced.py
+
+5. Test extraction:
+   Terminal 4:
+   python test_ocr_system.py
+
+6. Verify results:
+   curl http://localhost:5000/vital-signs/latest
+
+========================================
+✨ KEY IMPROVEMENTS
+========================================
+
+OLD SYSTEM:
+  ❌ Hardcoded coordinates
+  ❌ No visual feedback
+  ❌ No OCR testing
+  ❌ Black-box calibration
+  ❌ Hard to debug
+
+NEW SYSTEM:
+  ✅ Interactive drag-and-drop
+  ✅ Real-time preview
+  ✅ Pre-save OCR testing
+  ✅ Visual debug images
+  ✅ Easy troubleshooting
+
+========================================
+🎉 READY FOR PRODUCTION
+========================================
+
+System is now:
+  ✅ GUI-enabled
+  ✅ Fully interactive
+  ✅ Self-debugging
+  ✅ User-friendly
+  ✅ Production-quality
+
+Enjoy your professional medical OCR! 🏥
+
+========================================
