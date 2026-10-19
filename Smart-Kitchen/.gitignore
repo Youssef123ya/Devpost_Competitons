@@ -65,6 +65,10 @@ android/key.properties
 *.jks
 *.keystore
 
+# Firebase client config contains API keys. Commit only the *.example files.
+flutter_trial-main/flutter_trial-main/android/app/google-services.json
+flutter_trial-main/flutter_trial-main/lib/firebase_options.dart
+
 # iOS
 ios/Pods/
 ios/.symlinks/

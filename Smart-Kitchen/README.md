@@ -177,9 +177,14 @@ flutter pub get
 flutter run
 ```
 
-Point the app at your backend before running it, and supply your own Firebase
-project files (`android/app/google-services.json` and `lib/firebase_options.dart`)
-if you are not using the bundled configuration.
+Point the app at your backend before running it. Firebase client config is not
+committed, because it contains API keys. Copy the examples and replace the
+placeholders locally, or run `flutterfire configure`:
+
+- `android/app/google-services.json.example` → `android/app/google-services.json`
+- `lib/firebase_options.example.dart` → `lib/firebase_options.dart`
+
+Do not commit the real API keys.
 
 ### 4. ESP32 firmware
 
