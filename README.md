@@ -10,3 +10,4 @@ Devpost competition projects collected in one repository. Each folder is a snaps
 | [AETHER-_-3D-Website-Devpost](./AETHER-_-3D-Website-Devpost) | ÆTHER, a scroll-driven WebGL particle experience | https://github.com/Youssef123ya/AETHER-_-3D-Website-Devpost |
 | [Smart-Kitchen](./Smart-Kitchen) | Connected kitchen safety assistant | https://github.com/Youssef123ya/Smart-Kitchen |
 | [Fallow](./Fallow) | Weeknight kitchen planner for food already on hand | https://github.com/Youssef123ya/Fallow |
+| [Taskforge](./Taskforge) | Halcyon Ledger, one next step sized to energy and free minutes | https://github.com/Youssef123ya/Taskforge |
