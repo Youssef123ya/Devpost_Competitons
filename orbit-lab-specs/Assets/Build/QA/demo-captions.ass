@@ -1,0 +1,23 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1526
+PlayResY: 1590
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Caption,Arial,32,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,1.5,0,8,40,40,40,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:08.00,Caption,,0,0,0,,Orbit Lab: why doesn't every new moon cause an eclipse?\NA spatial lesson for curious learners.
+Dialogue: 0,0:00:08.00,0:00:16.00,Caption,,0,0,0,,Live Lens Studio Preview • simulated pinch input\NStart reveals a world-space Sun, Earth and Moon model.
+Dialogue: 0,0:00:16.00,0:00:24.00,Caption,,0,0,0,,Check the wrong alignment: feedback helps you recover.\NThe lesson advances only when the arrangement is correct.
+Dialogue: 0,0:00:24.00,0:00:37.00,Caption,,0,0,0,,Move the Moon with the slider or precise ±15° steps.\NSizes and distances are exaggerated teaching aids.
+Dialogue: 0,0:00:37.00,0:00:47.00,Caption,,0,0,0,,Solar eclipse: Moon between Sun and Earth.\NIts violet shadow outline reaches Earth.
+Dialogue: 0,0:00:47.00,0:01:08.00,Caption,,0,0,0,,Now find the opposite alignment for a lunar eclipse.\NThe learner manipulates one shared 3D model.
+Dialogue: 0,0:01:08.00,0:01:25.00,Caption,,0,0,0,,Lunar eclipse: Earth between Sun and Moon.\NThe Moon enters Earth's shadow.
+Dialogue: 0,0:01:25.00,0:01:36.00,Caption,,0,0,0,,Same order, different plane: the tilted shadow misses.\NThe 18° teaching tilt exaggerates the real effect.
+Dialogue: 0,0:01:36.00,0:01:47.00,Caption,,0,0,0,,Flatten the orbit and check again.\NReal eclipses occur near orbital nodes.
+Dialogue: 0,0:01:47.00,0:01:54.00,Caption,,0,0,0,,Three challenges complete. Replay restores the lesson.\NOrder and orbital plane both matter.
+Dialogue: 0,0:01:54.00,0:02:01.20,Caption,,0,0,0,,Built with Codex, CLAD and Lens Studio MCP; five LEAF tests passed.\NOffline lesson. Real-device comfort and tracking remain untested.

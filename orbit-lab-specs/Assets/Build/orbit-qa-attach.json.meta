@@ -1,0 +1,16 @@
+- !<AssetImportMetadata/1dd54bfd-1970-4a64-b881-becefb132c32>
+  ImportedAssetIds:
+    JsonAsset: !<reference> 31431f10-4832-4a14-b83a-12cd1b7f6ee7
+  ImporterName: JsonAssetImporter
+  PrimaryAsset: !<reference> 31431f10-4832-4a14-b83a-12cd1b7f6ee7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

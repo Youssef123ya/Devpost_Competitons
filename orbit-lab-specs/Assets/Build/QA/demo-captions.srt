@@ -1,0 +1,54 @@
+1
+00:00:00,000 --> 00:00:08,000
+Orbit Lab: why doesn't every new moon cause an eclipse?
+A spatial lesson for curious learners.
+
+2
+00:00:08,000 --> 00:00:16,000
+Live Lens Studio Preview • simulated pinch input
+Start reveals a world-space Sun, Earth and Moon model.
+
+3
+00:00:16,000 --> 00:00:24,000
+Check the wrong alignment: feedback helps you recover.
+The lesson advances only when the arrangement is correct.
+
+4
+00:00:24,000 --> 00:00:37,000
+Move the Moon with the slider or precise ±15° steps.
+Sizes and distances are exaggerated teaching aids.
+
+5
+00:00:37,000 --> 00:00:47,000
+Solar eclipse: Moon between Sun and Earth.
+Its violet shadow outline reaches Earth.
+
+6
+00:00:47,000 --> 00:01:08,000
+Now find the opposite alignment for a lunar eclipse.
+The learner manipulates one shared 3D model.
+
+7
+00:01:08,000 --> 00:01:25,000
+Lunar eclipse: Earth between Sun and Moon.
+The Moon enters Earth's shadow.
+
+8
+00:01:25,000 --> 00:01:36,000
+Same order, different plane: the tilted shadow misses.
+The 18° teaching tilt exaggerates the real effect.
+
+9
+00:01:36,000 --> 00:01:47,000
+Flatten the orbit and check again.
+Real eclipses occur near orbital nodes.
+
+10
+00:01:47,000 --> 00:01:54,000
+Three challenges complete. Replay restores the lesson.
+Order and orbital plane both matter.
+
+11
+00:01:54,000 --> 00:02:01,200
+Built with Codex, CLAD and Lens Studio MCP; five LEAF tests passed.
+Offline lesson. Real-device comfort and tracking remain untested.

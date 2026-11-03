@@ -1,0 +1,21 @@
+{
+  "modify": {
+    "@sceneObject:OrbitLab": {
+      "components.ScriptComponent.model": "@component:OrbitLabModel/OrbitLabModelMesh",
+      "components.ScriptComponent.instructionUI": "@component:OrbitLabInstructionPanel/OrbitLabInstructionUI",
+      "components.ScriptComponent.controlsUI": "@component:OrbitLabControlPanel/OrbitLabControlsUI",
+      "components.ScriptComponent.audio": "@component:OrbitLabAudio/OrbitLabAudioController"
+    },
+    "@sceneObject:OrbitLabModel": {
+      "components.ScriptComponent.material": "@id:70d03593-c7b4-410a-ae5c-75cb82ee32dc",
+      "components.ScriptComponent.sun": "@sceneObject:OrbitLabSun",
+      "components.ScriptComponent.earth": "@sceneObject:OrbitLabEarth",
+      "components.ScriptComponent.moon": "@sceneObject:OrbitLabMoon",
+      "components.ScriptComponent.orbit": "@sceneObject:OrbitLabOrbit",
+      "components.ScriptComponent.solarShadow": "@sceneObject:OrbitLabSolarShadow",
+      "components.ScriptComponent.lunarShadow": "@sceneObject:OrbitLabLunarShadow",
+      "components.ScriptComponent.sunlight": "@sceneObject:OrbitLabSunlight",
+      "components.ScriptComponent.plinth": "@sceneObject:OrbitLabPlinth"
+    }
+  }
+}

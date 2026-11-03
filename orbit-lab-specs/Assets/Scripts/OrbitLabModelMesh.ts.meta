@@ -1,0 +1,91 @@
+- !<AssetImportMetadata/3028a774-7cd7-424a-a06d-a674140702fb>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> b876e62f-74e4-4134-8841-a0ce60f438df
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> b876e62f-74e4-4134-8841-a0ce60f438df
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 247fdc9e-f7d9-441f-a145-5aa3b450c160
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/247fdc9e-f7d9-441f-a145-5aa3b450c160>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: d581fe1d-15d2-4222-8ae3-44fd780e96ca
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    earth: false
+    earthRadius: false
+    lunarShadow: false
+    material: false
+    moon: false
+    moonRadius: false
+    orbit: false
+    orbitRadius: false
+    plinth: false
+    solarShadow: false
+    sun: false
+    sunRadius: false
+    sunSpin: false
+    sunlight: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      sun: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      earth: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      moon: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      orbit: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      solarShadow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lunarShadow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sunlight: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      plinth: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      orbitRadius: !<float> 10.000000
+      earthRadius: 3.200000
+      moonRadius: 1.300000
+      sunRadius: 4.200000
+      sunSpin: !<float> 5.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color:#67E8F9\">Orbit Lab — spatial model</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input Asset.Material material {"hint":"Vertex-color material from SimpleVertexBaseColor package"}'
+    - '// @input SceneObject sun {"hint":"Authored Sun anchor"}'
+    - '// @input SceneObject earth {"hint":"Authored Earth anchor, center of the Moon orbit"}'
+    - '// @input SceneObject moon {"hint":"Authored moving Moon anchor"}'
+    - '// @input SceneObject orbit {"hint":"Authored orbit plane, tilted by the lesson"}'
+    - '// @input SceneObject solarShadow {"hint":"Authored wireframe Moon shadow anchor"}'
+    - '// @input SceneObject lunarShadow {"hint":"Authored wireframe Earth shadow anchor"}'
+    - '// @input SceneObject sunlight {"hint":"Authored sunlight-ray cue anchor"}'
+    - '// @input SceneObject plinth {"hint":"Authored virtual-tabletop stand-in anchor"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float orbitRadius = 10 {"hint":"Moon orbit radius in centimeters", "widget":"slider", "min":7, "max":12, "step":0.5}'
+    - '// @input float earthRadius = 3.2 {"hint":"Earth radius in centimeters", "widget":"slider", "min":2, "max":4, "step":0.1}'
+    - '// @input float moonRadius = 1.3 {"hint":"Moon radius in centimeters; intentionally exaggerated", "widget":"slider", "min":0.8, "max":1.8, "step":0.1}'
+    - '// @input float sunRadius = 4.2 {"hint":"Sun radius in centimeters; intentionally exaggerated", "widget":"slider", "min":3, "max":5, "step":0.1}'
+    - '// @input float sunSpin = 5 {"hint":"Slow Sun rotation in degrees per second", "widget":"slider", "min":0, "max":20, "step":1}'
+    - '// @ui {"widget":"group_end"}'

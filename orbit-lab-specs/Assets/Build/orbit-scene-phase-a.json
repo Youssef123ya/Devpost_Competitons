@@ -1,0 +1,329 @@
+{
+  "create": [
+    {
+      "id": "$temp:root",
+      "name": "OrbitLab",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -110
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabMain.ts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "$temp:model",
+      "name": "OrbitLabModel",
+      "parentId": "$temp:root",
+      "transform": {
+        "position": [
+          0,
+          -1,
+          0
+        ],
+        "rotation": [
+          35,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabModelMesh.ts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "$temp:sun",
+      "name": "OrbitLabSun",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          -19,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:earth",
+      "name": "OrbitLabEarth",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          7,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:moon",
+      "name": "OrbitLabMoon",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          7,
+          0,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:orbit",
+      "name": "OrbitLabOrbit",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          7,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:solar",
+      "name": "OrbitLabSolarShadow",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          7,
+          0,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:lunar",
+      "name": "OrbitLabLunarShadow",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          7,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:rays",
+      "name": "OrbitLabSunlight",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          -13,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:table",
+      "name": "OrbitLabPlinth",
+      "parentId": "$temp:model",
+      "transform": {
+        "position": [
+          0,
+          -5,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "$temp:instructions",
+      "name": "OrbitLabInstructionPanel",
+      "parentId": "$temp:root",
+      "transform": {
+        "position": [
+          0,
+          19,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabInstructionUI.ts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "$temp:controls",
+      "name": "OrbitLabControlPanel",
+      "parentId": "$temp:root",
+      "transform": {
+        "position": [
+          0,
+          -25,
+          2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabControlsUI.ts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "$temp:audio",
+      "name": "OrbitLabAudio",
+      "parentId": "$temp:root",
+      "transform": {
+        "position": [
+          0,
+          -4,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabAudioController.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -11,3 +11,7 @@ Devpost competition projects collected in one repository. Each folder is a snaps
 | [Smart-Kitchen](./Smart-Kitchen) | Connected kitchen safety assistant | https://github.com/Youssef123ya/Smart-Kitchen |
 | [Fallow](./Fallow) | Weeknight kitchen planner for food already on hand | https://github.com/Youssef123ya/Fallow |
 | [Taskforge](./Taskforge) | Halcyon Ledger, one next step sized to energy and free minutes | https://github.com/Youssef123ya/Taskforge |
+| [ghostlight-kiroween-2026](./ghostlight-kiroween-2026) | Browser-local accessibility repair workshop for HTML | https://github.com/Youssef123ya/ghostlight-kiroween-2026 |
+| [sleight-of-eye](./sleight-of-eye) | Close-up magic for a tiny felt audience that follows your gaze | https://github.com/Youssef123ya/sleight-of-eye |
+| [Raid-Relay](./Raid-Relay) | Twitch chat crew steering a cooperative space expedition | https://github.com/Youssef123ya/Raid-Relay |
+| [orbit-lab-specs](./orbit-lab-specs) | Spatial eclipse lesson for SPECS in Lens Studio | https://github.com/Youssef123ya/orbit-lab-specs |

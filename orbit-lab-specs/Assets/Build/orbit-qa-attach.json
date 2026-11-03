@@ -1,0 +1,66 @@
+{
+  "create": [
+    {
+      "name": "AiPreviewAgent Handler",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:AiPreviewAgentInspect.lspkg/AgentInspectScript.ts"
+          }
+        },
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Packages/AiPreviewAgentInteract.lspkg/AgentInteractScript.ts"
+          }
+        }
+      ]
+    },
+    {
+      "name": "OrbitLabQA",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -110
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": [
+        {
+          "type": "ScriptComponent",
+          "properties": {
+            "scriptAsset": "@asset:Scripts/OrbitLabLeafIndex.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

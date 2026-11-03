@@ -1,0 +1,170 @@
+// @module SnapOS-3.0/Colors — DO NOT REMOVE: prevents Lens Studio module collision
+import {HSVtoRGB} from "../../Utility/UIKitUtilities"
+
+// TODO: Replace with production-approved SnapOS3 values before release.
+// Temporary high-saturation palette used to verify theme wiring during migration.
+
+export const DarkestGray = HSVtoRGB(210, 0.15, 0.15, 1)
+export const DarkerGray = HSVtoRGB(210, 0.15, 0.18, 1)
+export const DarkerLessGray = HSVtoRGB(210, 0.15, 0.2, 1)
+export const DarkGray = HSVtoRGB(210, 0.2, 0.25, 1)
+export const MediumDarkGray = HSVtoRGB(210, 0.2, 0.35, 1)
+export const MediumGray = HSVtoRGB(210, 0.2, 0.5, 1)
+
+export const TriggeredBorderCyan = HSVtoRGB(190, 0.8, 0.95, 1)
+export const TriggeredBorderCyanDim = HSVtoRGB(190, 0.7, 0.7, 1)
+export const TriggeredBorderClearGray = HSVtoRGB(210, 0, 0.16, 0)
+
+export const DarkestBlue = HSVtoRGB(210, 0.7, 0.25, 1)
+export const DarkerBlue = HSVtoRGB(210, 0.65, 0.35, 1)
+export const DarkBlue = HSVtoRGB(210, 0.7, 0.4, 1)
+export const DarkerMediumBlue = HSVtoRGB(210, 0.7, 0.45, 1)
+export const DarkMediumBlue = HSVtoRGB(210, 0.75, 0.55, 1)
+export const MediumBlue = HSVtoRGB(210, 0.7, 0.6, 1)
+export const BrightCoolBlue = HSVtoRGB(200, 0.8, 0.65, 1)
+export const BrightCyan = HSVtoRGB(190, 0.85, 0.9, 1)
+
+export const DarkCoolGray = HSVtoRGB(220, 0.15, 0.25, 1)
+export const MediumCoolGray = HSVtoRGB(220, 0.2, 0.4, 1)
+
+export const DarkestPurple = HSVtoRGB(270, 0.7, 0.25, 1)
+export const DarkPurple = HSVtoRGB(270, 0.75, 0.4, 1)
+export const DarkWarmPurple = HSVtoRGB(270, 0.8, 0.5, 1)
+export const MediumDarkPurple = HSVtoRGB(270, 0.65, 0.5, 1)
+export const MediumPurple = HSVtoRGB(270, 0.8, 0.55, 1)
+export const MediumLightPurple = HSVtoRGB(270, 0.65, 0.6, 1)
+export const LightPurple = HSVtoRGB(270, 0.6, 0.7, 1)
+
+export const Transparent = HSVtoRGB(0, 0, 0, 0)
+
+// Slider-specific colors
+export const SliderKnobTriggeredBorderMid = HSVtoRGB(195, 0.75, 0.35, 0.5)
+export const SliderKnobPurple = HSVtoRGB(270, 0.7, 0.35, 1)
+export const SliderKnobCyan = HSVtoRGB(190, 0.75, 0.5, 1)
+export const SliderKnobBorderPurple = HSVtoRGB(270, 0.6, 0.5, 1)
+export const SliderKnobBorderCyan = HSVtoRGB(190, 0.65, 0.65, 1)
+
+export const SliderKnobHoverPurple = HSVtoRGB(270, 0.65, 0.45, 1)
+export const SliderKnobHoverCyan = HSVtoRGB(190, 0.7, 0.6, 1)
+export const SliderKnobHoverBorderPurple = HSVtoRGB(270, 0.55, 0.6, 1)
+export const SliderKnobHoverBorderCyan = HSVtoRGB(190, 0.6, 0.75, 1)
+
+export const SliderFillPurple = HSVtoRGB(270, 0.6, 0.4, 1)
+export const SliderFillCyan = HSVtoRGB(190, 0.65, 0.55, 1)
+export const SliderFillHoverPurple = HSVtoRGB(270, 0.55, 0.5, 1)
+export const SliderFillHoverCyan = HSVtoRGB(190, 0.6, 0.65, 1)
+
+export const SliderHoverFillPurple = HSVtoRGB(256, 0.33, 0.67, 1)
+export const SliderHoverFillGrayBlue = HSVtoRGB(228, 0.26, 0.58, 1)
+export const SliderHoverFillCyan = HSVtoRGB(169, 0.54, 0.72, 1)
+
+// ProgressBar-specific colors
+export const ProgressBarTrackGray = HSVtoRGB(180, 0.03, 0.26, 1)
+export const ProgressBarFillGreen = HSVtoRGB(155, 0.3, 0.45, 1)
+
+// Content text/icon colors
+export const ContentIdleGray = HSVtoRGB(0, 0, 0.85, 1)
+export const ContentWhite = HSVtoRGB(0, 0, 1, 1)
+export const ContentPressedGray = HSVtoRGB(0, 0, 0.75, 1)
+export const ContentInactiveWhite = HSVtoRGB(0, 0, 1, 0.35)
+export const ContentAccentBlue = HSVtoRGB(214, 0.62, 1.0, 1)
+export const ContentAccentBlueDim = HSVtoRGB(214, 0.62, 1.0, 0.35)
+
+// 3.0 button colors
+// buttons
+export const WarmLightGray = HSVtoRGB(162, 0.06, 0.38, 1)
+export const DarkInside = HSVtoRGB(0, 0, 0.1, 1)
+export const WarmDarkGray = WarmLightGray.mult(DarkInside)
+export const InactivePrimary = HSVtoRGB(150, 0.032, 0.251, 1)
+export const InactiveSecondary = InactivePrimary.mult(DarkInside)
+export const DarkInsideLight = HSVtoRGB(0, 0, 0.2, 1)
+export const OutlineBrightness = HSVtoRGB(0, 0, 0.102, 0)
+export const AccentPurple = HSVtoRGB(251, 0.42, 0.643, 1)
+export const AccentPurpleDim = AccentPurple.mult(DarkInside)
+export const AccentPurpleDimLight = AccentPurple.mult(DarkInsideLight)
+export const AccentPurpleBright = AccentPurple.add(OutlineBrightness)
+export const AccentBlue = HSVtoRGB(200, 0.342, 0.596, 1)
+export const AccentBlueDim = AccentBlue.mult(DarkInside)
+export const AccentBlueDimLight = AccentBlue.mult(DarkInsideLight)
+export const AccentBlueBright = AccentBlue.add(OutlineBrightness)
+export const AccentTeal = HSVtoRGB(169, 0.539, 0.722, 1)
+export const AccentTealDim = AccentTeal.mult(DarkInside)
+export const AccentTealDimLight = AccentTeal.mult(DarkInsideLight)
+export const AccentTealBright = AccentTeal.add(OutlineBrightness)
+export const GhostHoverGray = HSVtoRGB(173, 0.097, 0.278, 1)
+export const GhostPressedGray = HSVtoRGB(160, 0.055, 0.22, 1)
+export const GhostSelectedGray = HSVtoRGB(160, 0.055, 0.22, 1)
+
+// RadioButton-specific colors
+export const RadioFillGray = HSVtoRGB(0, 0, 0.15, 1)
+export const RadioBorderGray = HSVtoRGB(180, 0.08, 0.26, 1)
+export const RadioAccentViolet = HSVtoRGB(256, 0.43, 0.69, 1)
+
+// Dropdown colors
+export const DropdownBackgroundGray = HSVtoRGB(0, 0, 0.176, 1)
+export const DropdownDrawerGray = HSVtoRGB(0, 0, 0.129, 1)
+
+// Switch-specific colors
+export const SwitchFlatHoverBackground = HSVtoRGB(180, 0.08, 0.26, 1)
+export const SwitchFlatTrackGray = HSVtoRGB(160, 0.05, 0.22, 1)
+export const SwitchFloatBorderGray = HSVtoRGB(180, 0.08, 0.26, 1)
+export const SwitchFloatBorderGreen = HSVtoRGB(155, 0.295, 0.451, 1)
+export const SwitchFloatBorderTeal = HSVtoRGB(185, 0.365, 0.518, 1)
+export const SwitchNeutralGray30 = HSVtoRGB(0, 0, 0.3, 1)
+export const SwitchNeutralGray35 = HSVtoRGB(0, 0, 0.35, 1)
+export const SwitchNeutralDarkGray10 = HSVtoRGB(0, 0, 0.1, 1)
+export const SwitchNeutralDarkGray12 = HSVtoRGB(0, 0, 0.12, 1)
+export const SwitchNeutralDarkGray15 = HSVtoRGB(0, 0, 0.15, 1)
+export const SwitchNeutralDarkGray17 = HSVtoRGB(0, 0, 0.17, 1)
+export const SwitchNeutralDarkGray20 = HSVtoRGB(0, 0, 0.2, 1)
+export const SwitchDarkGreen = HSVtoRGB(155, 0.5, 0.3, 1)
+export const SwitchDimGreen = HSVtoRGB(150, 0.2, 0.22, 1)
+export const SwitchMutedGreen = HSVtoRGB(120, 0.08, 0.6, 1)
+export const SwitchDimTeal = HSVtoRGB(169, 0.539, 0.36, 1)
+export const SwitchDarkTeal = HSVtoRGB(173, 0.684, 0.373, 1)
+export const SwitchMutedTeal = HSVtoRGB(172, 0.388, 0.314, 1)
+export const SwitchDimTealGray = HSVtoRGB(180, 0.156, 0.302, 1)
+export const SwitchMediumTealGray = HSVtoRGB(180, 0.12, 0.68, 1)
+export const SwitchDarkTealGray = HSVtoRGB(183, 0.5, 0.4, 1)
+export const SwitchTealGray = HSVtoRGB(184, 0.19, 0.58, 1)
+export const SwitchTealGray50 = HSVtoRGB(184, 0.371, 0.5, 1)
+export const SwitchDimCyanTeal = HSVtoRGB(187, 0.609, 0.4, 1)
+export const SwitchMediumCyanTeal = HSVtoRGB(187, 0.385, 0.357, 1)
+export const SwitchDarkCyanTeal = HSVtoRGB(188, 0.3, 0.314, 1)
+export const SwitchDarkCyan = HSVtoRGB(189, 0.498, 0.243, 1)
+export const SwitchBrightCyan = HSVtoRGB(190, 0.5, 0.95, 1)
+export const SwitchMediumCyan = HSVtoRGB(190, 0.47, 0.55, 1)
+export const SwitchDimCyan = HSVtoRGB(191, 0.45, 0.48, 1)
+export const SwitchDarkCyanGray = HSVtoRGB(191, 0.41, 0.31, 1)
+export const SwitchPaleCyan = HSVtoRGB(192, 0.13, 0.753, 1)
+export const SwitchDimCyanBlue = HSVtoRGB(193, 0.42, 0.45, 1)
+export const SwitchMediumCyanBlue = HSVtoRGB(195, 0.38, 0.42, 1)
+export const SwitchPaleWhiteCyan = HSVtoRGB(196, 0.19, 1, 1)
+export const SwitchDimBlue = HSVtoRGB(200, 0.342, 0.3, 1)
+export const SwitchBrightBlue = HSVtoRGB(201, 0.624, 0.835, 1)
+export const SwitchDarkNavy = HSVtoRGB(207, 0.6, 0.15, 1)
+export const SwitchMediumBlue = HSVtoRGB(212, 0.644, 0.469, 1)
+export const SwitchDimBlueGray = HSVtoRGB(213, 0.592, 0.425, 1)
+export const SwitchDimPurple = HSVtoRGB(238, 0.575, 0.45, 1)
+export const SwitchDimViolet = HSVtoRGB(249, 0.14, 0.365, 1)
+export const SwitchMediumViolet = HSVtoRGB(250, 0.604, 0.565, 1)
+export const SwitchDarkViolet = HSVtoRGB(250, 0.4, 0.4, 1)
+export const SwitchDimPurpleBlue = HSVtoRGB(251, 0.42, 0.32, 1)
+export const SwitchDarkPurple = HSVtoRGB(251, 0.538, 0.35, 1)
+export const SwitchDeepPurple = HSVtoRGB(262, 0.59, 0.436, 1)
+export const SwitchDarkMagenta = HSVtoRGB(264, 0.5, 0.25, 1)
+export const SwitchDeepMagenta = HSVtoRGB(273, 0.577, 0.306, 1)
+
+// Tooltip colors (SnapOS 3.0)
+export const TooltipFillGray = new vec4(47 / 255, 50 / 255, 49 / 255, 1)
+export const TooltipTextGray = HSVtoRGB(210, 0.05, 0.85, 1)
+
+// Checkbox-specific colors
+export const CheckboxBaseBackground = HSVtoRGB(0, 0, 0.149, 1)
+export const CheckboxBaseBorder = HSVtoRGB(180, 0.076, 0.259, 1)
+export const CheckboxToggledBorder = HSVtoRGB(0, 0, 0.251, 1)
+export const CheckboxToggledInactive = HSVtoRGB(160, 0.06, 0.196, 1)
+export const CheckboxBaseInactiveBorder = HSVtoRGB(0, 0, 0.129, 1)
+export const ListCheckboxBaseBackground = HSVtoRGB(0, 0, 0.129, 1)
+
+export const SliderFillIdle = HSVtoRGB(160, 0.06, 0.38, 1)

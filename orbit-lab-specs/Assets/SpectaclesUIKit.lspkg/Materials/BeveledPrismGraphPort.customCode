@@ -1,0 +1,190 @@
+// ---------------------------------------------------------------
+// BeveledPrismGraphPort — Fragment Shader
+//
+// Pipeline (post-simplification of the FloatingMain.ss_graph port):
+//
+//   1. Matcap reflection (computedNormal + computedBitangent + view).
+//        N + 0.286 * B → reflect → spherical map → rotate → sample
+//        reflTex. Tinted via sRGB roundtrip + HSV shift.
+//   2. Edge mask: analytical face rim + bevel chamfer + side-wall
+//        stripes + fresnel rim, all combined with max(). Drives both
+//        accent color routing and final alpha.
+//   3. Body color = mix(vertexBaseColor, vertexAccentColor, edgeMask).
+//        Both varyings are evaluated per-vertex from TS-driven
+//        master*/accent* uniforms — the fragment never touches a
+//        gradient cascade or status branch.
+//   4. finalRGB = reflTinted + base.rgb. Premultiplied for
+//        BlendMode=Glass / PremultipliedAlphaAuto compatible.
+//
+// State animation: drive master0..2 / accent0..3 from TS based on the
+// current state. Vertex shader evaluates the gradients once per vert.
+// ---------------------------------------------------------------
+
+input_vec3 computedNormal;
+// Per-vertex evaluated state-color gradients from the vertex shader.
+// Replaces the per-fragment gradient cascade — fragment just does one
+// mix(vertexBaseColor, vertexAccentColor, edgeMask).
+input_vec3 vertexBaseColor;
+input_vec3 vertexAccentColor;
+// Per-vertex pre-computed matcap UV. Vertex shader does the entire
+// reflection chain (normalize, reflect, spherical map, rotation) so
+// the fragment just samples the texture — converts the dependent
+// matcap fetch to an independent fetch, the biggest TBDR win on this
+// shader.
+input_vec2 reflUV;
+// Per-vertex pre-computed edge mask (face rim + bevel chamfer + side-
+// wall stripes, combined via max). Fresnel is added per-fragment since
+// it depends on per-pixel view direction. Smoothsteps in the vertex
+// shader were replaced with linear ramps so the mask interpolates
+// exactly across triangles. Saves ~60 ALU per fragment.
+input_float vertexEdgeMask;
+
+input_float opacity;
+// "Intensity" Float Parameter in graph
+input_float reflIntensity;
+
+
+input_texture_2d reflTex;
+
+output_vec4 FinalColor;
+
+// ===============================================================
+// Main — FloatingMain.glsl port (lines 1204–1410)
+// ===============================================================
+void main()
+{
+    // -----------------------------------------------------------
+    // Reflection block (FloatingMain Node254 → Node253 → Node114)
+    //
+    // Big change vs Floating_button: the reflection input vector is
+    // (0, 0.286275, 1) — a TILTED axis, not pure (0,0,1). After
+    // M*v = T*0 + B*0.286275 + N*1, the axis is N + 0.286*B (tangent-
+    // bitangent). Without proper mesh tangents we approximate with
+    // world-up: N + 0.286 * worldUp. For a button facing +Z this
+    // tilts the matcap sample up, sweeping prismatic colors across.
+    //
+    // NORMAL: use analytical computedNormal everywhere.
+    //
+    // Earlier we hybridized — mesh-N on the face (whose per-vertex jitter
+    // from GLB-importer normal flattening incidentally decorrelated the
+    // matcap UV from texture bands) and analytical-N on the bevel (smooth).
+    // That tradeoff was needed when analytical-N was exactly (0, 0, 1)
+    // across the whole face: a single matcap pixel for every face fragment.
+    //
+    // Now obsolete: the vertex shader leans rim normals outward by
+    // `faceRimLean` (matches reference's measured ~22° tilt at the rim,
+    // see BeveledPrismShader.customCode), so analytical-N varies smoothly
+    // across the face on its own. Mesh-N's jitter was the source of the
+    // visible "swoosh" tracing the hub-rim triangulation — dropping it
+    // leaves clean, smoothly-interpolated normals everywhere.
+    // Normal stays in fragment for the per-pixel fresnel calc below.
+    mediump vec3 N = normalize(computedNormal);
+
+    // viewWS — kept in fragment for the fresnel `dot(N, viewWS)` term,
+    // which needs per-pixel view direction to read correctly at the
+    // bevel/rim. The matcap uses a vertex-precomputed reflUV instead.
+    //
+    // TODO(uikit-prism-shader-perf): Move viewWS (or just NdotV) to a
+    // vertex varying. Linear interpolation across a button-sized triangle
+    // is invisible at our scale; saves ~7 fragment ALU. Combined with
+    // dropping the per-fragment normalize(computedNormal) above (~5 ALU),
+    // ~14 fragment ALU total — the biggest remaining perf win.
+    mediump vec3 viewWS = normalize(system.getCameraPosition() - system.getSurfacePositionWorldSpace());
+
+    // Matcap sample: reflUV is computed per-vertex in the vertex shader
+    // (full reflect + spherical map + rotation chain), interpolated, and
+    // arrives here ready to sample. Independent texture fetch — the GPU
+    // can prefetch as soon as vertex data lands. Plus we skip the
+    // sRGB→linear→×intensity→linear→sRGB roundtrip from the original
+    // cascade and multiply directly in sRGB space.
+    // Sample directly at sRGB space, multiply by intensity. The
+    // original hsvShift(-6 sat) approximation (luma-mix toward gray
+    // at 0.06) was dropped — its visual contribution at 6% pull is
+    // imperceptible and it cost ~9 ALU per fragment (a dot + vec3
+    // mix). To restore: see prior version in git history.
+    mediump vec3 reflTinted = reflTex.sample(reflUV).rgb * reflIntensity;
+
+    // -----------------------------------------------------------
+    // Edge mask — vertexEdgeMask is computed per-vertex (face rim +
+    // bevel chamfer + bevel opaque + side stripes, all combined via
+    // max). Smoothsteps were replaced with linear ramps in the vertex
+    // shader so this interpolates exactly across triangles.
+    //
+    // Fresnel is the only mask term that has to stay per-fragment —
+    // it depends on per-pixel view direction. ~6 ALU + 1 dot here.
+    //
+    // Final mask = max(vertexEdgeMask, fresnel-blended), then scaled
+    // by maskStrength.
+    //
+    // To tune the mask shape, edit the vertex shader's edge mask block.
+    // -----------------------------------------------------------
+    const mediump float maskStrength = 1.0;
+    const mediump float fresnelMaskStrength = 0.5;
+
+    mediump float NdotV = abs(dot(N, viewWS));
+    // Fold pow(x, fresnelPower) → x⁴ since fresnelPower=4 in .mat.
+    mediump float xn  = 1.0 - NdotV;
+    mediump float xn2 = xn * xn;
+    mediump float fresnelRaw  = xn2 * xn2;                 // 0 head-on → 1 grazing
+    mediump float fresnelMask = fresnelRaw * fresnelMaskStrength;
+
+    mediump float mask = max(vertexEdgeMask, fresnelMask * vertexEdgeMask + fresnelMask * 0.25);
+    mask *= maskStrength;
+
+    // -----------------------------------------------------------
+    // Compose body color. master (the violet→teal directional band) stays
+    // dominant across the face, bevel, and side walls — the broad edge
+    // coverage routes to the accent only weakly via `accentStrength`, so the
+    // bevel/sides read violet/teal rather than mint.
+    //
+    // The mint HIGHLIGHT is restored as a fresnel rim: at grazing angles the
+    // accent comes in strong (`fresnelHighlight`), painting the bright mint
+    // edge glow along the bevel/side silhouette without minting the broad
+    // surface. colorWeight = max(broad accent, fresnel mint highlight).
+    // Alpha (below) still uses the full `mask`, so the bevel/sides stay solid.
+    // -----------------------------------------------------------
+    const mediump float accentStrength   = 0.55; // broad bevel/side → master-dominant
+    const mediump float fresnelHighlight = 1.0;  // mint rim highlight strength
+    mediump float colorWeight = max(vertexEdgeMask * accentStrength, fresnelRaw * fresnelHighlight);
+    mediump vec3 base = mix(vertexBaseColor, vertexAccentColor, colorWeight);
+
+    // Global "pop" — a bit more saturation + brightness on the COLOURED
+    // surfaces only. Grey faces are untouched: saturating a desaturated
+    // pixel does nothing, and the brightness lift is gated by chroma so a
+    // grey pixel gets none. Tune SAT_BOOST / BRIGHT_BOOST to taste.
+    const mediump float SAT_BOOST    = 1.25;
+    const mediump float BRIGHT_BOOST = 0.15;
+    mediump float baseLuma  = dot(base, vec3(0.299, 0.587, 0.114));
+    mediump vec3  baseChroma = base - baseLuma;
+    base = max(baseLuma + baseChroma * SAT_BOOST, 0.0);
+    mediump float chromaMag = max(max(abs(baseChroma.r), abs(baseChroma.g)), abs(baseChroma.b));
+    base += base * (BRIGHT_BOOST * clamp(chromaMag * 6.0, 0.0, 1.0));
+
+    // Bevel + face brightness are applied per-vertex in BeveledPrismShader
+    // now, so the bevel lift can ease off at idle via master0.a.
+
+    // -----------------------------------------------------------
+    // Composition: Add(reflTinted, base)
+    // Premultiplied alpha output for BlendMode=PremultipliedAlphaAuto.
+    // -----------------------------------------------------------
+    mediump vec3 finalRGB = reflTinted + base;
+
+    // Hue-preserving soft tone map. Without this, hardware does a per-
+    // channel clamp(0,1) which lets bright channels saturate at 1.0
+    // while others vary — visible as hue shifts toward magenta/cyan/
+    // yellow at the highlights. Scaling by max(maxChan, 1) keeps the
+    // hue ratios intact and produces a smooth approach to white.
+    // (max(finalRGB, 0) clamp dropped — all inputs are guaranteed
+    //  non-negative, so it can never trigger.)
+    mediump float maxChan = max(max(finalRGB.r, finalRGB.g), finalRGB.b);
+    finalRGB = finalRGB / max(maxChan, 1.0);
+
+    // Alpha: mask drives opacity. `bodyOpacity` controls how transparent
+    // the body (mask=0) gets — 0 = body fully invisible, 1 = body fully
+    // opaque (mask has no effect on alpha). Stripe regions (mask≈1) are
+    // always at full `opacity`.
+    const mediump float bodyOpacity = .5;
+    mediump float maskAlpha = mix(bodyOpacity, 1.0, mask);
+    mediump float a = opacity * maskAlpha;
+    FinalColor = vec4(finalRGB * a, a);
+}

@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/59faa652-caf8-444d-bd38-dcd9f63edb5e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4ba8f275-150c-4e59-bc5d-59e177876b12
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4ba8f275-150c-4e59-bc5d-59e177876b12
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> ad25679e-b6d6-400c-a323-b7613edbe1b9
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/ad25679e-b6d6-400c-a323-b7613edbe1b9>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 172dcd64-2d3e-4dec-9f07-0df6ff9b570b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    musicVolume: false
+    sfxVolume: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - sfxVolume: 0.500000
+      musicVolume: 0.080000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color:#67E8F9\">Orbit Lab — sound</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float sfxVolume = 0.5 {"hint":"Immediate interaction-cue volume", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @input float musicVolume = 0.08 {"hint":"Quiet ambient music volume; zero mutes the bed", "widget":"slider", "min":0, "max":0.5, "step":0.01}'
+    - '// @ui {"widget":"group_end"}'

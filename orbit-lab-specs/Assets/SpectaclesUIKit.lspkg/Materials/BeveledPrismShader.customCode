@@ -1,0 +1,418 @@
+// ============================================================
+// Collapsed 3D Squircle — Vertex Shader Custom Code
+// Inflates the collapsed mesh into a 3D rounded box and evaluates
+// the master/accent state-color gradients per vertex.
+//
+// System Inputs: SurfacePositionObjectSpace, SurfaceColor, SurfaceUV0..2
+// Inputs: targetSize(vec3), cornerRadii(vec4), bevelRadius(float),
+//         rotation(float),
+//         master0..2(vec4), accent0..3(vec4)
+// Outputs: newPos, computedNormal,
+//          vertexBaseColor(vec3), vertexAccentColor(vec3),
+//          vertexEdgeMask, reflUV
+//
+// Mesh data layout (see UIKitResources/beveled_prism_generator.py):
+//   Color0.rg → quadrant XY direction (R: 0=L 1=R, G: 0=B 1=T)
+//   Color0.b  → rim mask (0 = hub, 1 = rim)
+//   Color0.a  → zParam (0.0 = front half, 1.0 = back half)
+//   UV0.xy    → bevel-encoding: (1-sin(bevelAngle), 1-cos(bevelAngle))
+//   UV1.xy    → radial direction: (X/2+0.5, Y/2+0.5) of unit profile
+//   UV2.xy    → normal-bevel encoding (split from UV0 for split normals)
+//
+// State-color gradients: TS pushes the master and accent stops as
+// uniforms (per-instance, lerped between idle/hover/active palettes).
+// We evaluate the 3-stop master and 4-stop accent gradients per
+// vertex and pass the results as varyings — fragment just does one
+// mix(). Saves ~250 ALU and ~14 pow() per fragment vs. the old
+// per-fragment gradient cascade.
+//
+// Note: the .glb also carries a baked analytical normal per loop, but LS's
+// importer flattens custom split normals on this mesh so we recompute here
+// at vertex time (~8 ALU + 1 normalize) for reliable smooth shading.
+// ============================================================
+
+input_vec3 targetSize;
+input_vec4 cornerRadii;
+input_float bevelRadius;
+// Matcap UV rotation in degrees, around (0.5, 0.5). Was a fragment-side
+// uniform; moved here because reflection math now runs per-vertex.
+input_float rotation;
+// Cursor-following matcap UV shift. Added to the final reflUV so the
+// matcap's bright spot tracks the interactor's hit point on the surface
+// — this is the "highlight under the finger" effect from the reference.
+// TS pushes a smoothed value while hovered; (0,0) = centered. ~2 ALU /
+// vertex, 0 added cost in fragment (offset bakes into the existing
+// reflUV varying and rides through interpolation untouched).
+input_vec2 cursorOffset;
+// Designer-tunable static matcap UV offset. Added to reflUV alongside
+// the cursor offset, so it lets you nudge the resting matcap position
+// independent of cursor tracking. Lives on the `.mat` (no TS push) —
+// drag it in the LS Material Editor and the change is live.
+input_vec2 baseCursorOffset;
+// Forward-only Z displacement applied as `(1 - zParam) * frontExtrusion`.
+// Front face/bevel (zParam=0) gets the full shift; back face/bevel
+// (zParam=1) is anchored. Side wall middle ring (zParam=0.5) lands at
+// the geometric midpoint of the asymmetric span. Driven per-state by
+// BeveledPrismVisual; `targetSize.z` (collider/AABB-relevant) stays put.
+input_float frontExtrusion;
+// State-color stops, lerped between idle/hover/active palettes by TS.
+// master*: 3-stop master gradient evaluated over radialT.
+// accent*: 4-stop accent gradient evaluated over dirT.
+input_vec4 master0;
+input_vec4 master1;
+input_vec4 master2;
+input_vec4 accent0;
+input_vec4 accent1;
+input_vec4 accent2;
+input_vec4 accent3;
+output_vec3 newPos;
+output_vec3 computedNormal;
+// Per-vertex evaluated state colors. Alpha was unused (only .rgb was
+// read in fragment), so vec3 saves both mix ALU and varying bandwidth.
+output_vec3 vertexBaseColor;
+output_vec3 vertexAccentColor;
+// Per-vertex edge mask (face rim + bevel chamfer + bevel opaque +
+// side-wall stripes, combined via max). Fresnel is added per-fragment
+// since it depends on per-pixel view direction. Smoothsteps replaced
+// with linear ramps so the result interpolates exactly across triangles
+// (no kinks at vertex positions). Saves ~60 ALU per fragment.
+output_float vertexEdgeMask;
+// Pre-computed matcap UV. Replaces the per-fragment reflection math
+// (normalize×3, reflect, spherical map, sin/cos rotation) — fragment
+// just samples reflTex at this UV. Converts the dependent texture
+// fetch into an independent fetch (big TBDR win) and saves ~35-40 ALU
+// per fragment. Slight quality trade-off: per-fragment view direction
+// varies across triangles; we evaluate the reflection at vertices and
+// linearly interpolate. For our soft glass matcap, imperceptible.
+output_vec2 reflUV;
+
+
+// Gradient stops mix in sRGB space directly. At our muted palette
+// (idle 0.10 grays, accent 0.05-0.35) the mid-stop difference between
+// linear and sRGB lerp is imperceptible. To restore radiometrically
+// correct mixing, wrap the mix() with sRGB↔linear conversions.
+
+// 3-stop gradient. Stops at (0, r1, 1).
+vec3 gradient3v(float t, vec3 c0, vec3 c1, vec3 c2, float r1)
+{
+    t = clamp(t, 0.0, 1.0);
+    if (t <= r1) return mix(c0, c1, t / max(r1, 1e-5));
+    return mix(c1, c2, (t - r1) / max(1.0 - r1, 1e-5));
+}
+
+// 4-stop gradient. Stops at (0, r1, r2, 1).
+vec3 gradient4v(float t, vec3 c0, vec3 c1, vec3 c2, vec3 c3, float r1, float r2)
+{
+    t = clamp(t, 0.0, 1.0);
+    if (t <= r1) return mix(c0, c1, t / max(r1, 1e-5));
+    if (t <= r2) return mix(c1, c2, (t - r1) / max(r2 - r1, 1e-5));
+    return mix(c2, c3, (t - r2) / max(1.0 - r2, 1e-5));
+}
+
+void main()
+{
+    // 1. Read encoded mesh data
+    vec3 localMeshPos = system.getSurfacePositionObjectSpace();
+    vec4 vertColor = system.getSurfaceColor();          // Color0: Slice_Data
+    vec2 surfData = system.getSurfaceUVCoord0();        // UV0:    bevel encoding
+    // 2. Decode XY direction from Color0.RG
+    vec2 direction = vertColor.rg * 2.0 - 1.0;
+    // 3. Per-corner radius selection (same as 2D)
+    float R = vertColor.r;       // 1 if Right, 0 if Left
+    float L = 1.0 - R;
+    float T = vertColor.g;       // 1 if Top, 0 if Bottom
+    float B = 1.0 - T;
+    vec4 cornerWeights = vec4(R*T, R*B, L*T, L*B);  // TR, BR, TL, BL
+    float currentRadius = dot(cornerRadii, cornerWeights);
+    // 4. Clamp radius to half the smallest XY dimension.
+    // Without the *0.5, currentRadius could exceed halfSize, which makes
+    // hubOffset = (halfSize - safeRadius) * direction go negative — the
+    // quadrants invert and the inflation produces no straight portions
+    // between corners (corners eat the entire perimeter). The *0.5 ensures
+    // there's always at least a degenerate straight portion at the smallest
+    // axis and proper straight portions elsewhere.
+    // TODO(uikit-prism-shader-perf): safeRadius / safeBevel derive from
+    // uniforms (cornerRadii, bevelRadius, targetSize). If asymmetric
+    // corner radii stay unused (TS currently sets all four corners equal),
+    // pre-compute these in TS and push as uniforms — saves ~6-8 ALU/vert
+    // and gives TS a single source of truth for clamped sizes (collider/
+    // AABB sync). The .mat slots Port_safeRadius_N000 / Port_safeBevel_N000
+    // / Port_hubOffsetScale_N000 are already reserved.
+    float minDim = min(targetSize.x, targetSize.y);
+    float safeRadius = min(currentRadius, minDim * 0.5);
+    float safeBevel = min(bevelRadius, min(safeRadius, targetSize.z * 0.5));
+    // 5. XY positioning (same as 2D)
+    vec2 halfSize = targetSize.xy * 0.5;
+    vec2 hubOffset = (halfSize - vec2(safeRadius)) * direction;
+    vec2 cornerXY = localMeshPos.xy * safeRadius;
+    // 6. Z positioning from pre-baked bevel factors
+    //    UV0.X = (1 - sinBA) = bevel inset factor: 1 at face, 0 at side
+    //    UV0.Y = (1 - cosBA) = bevel Z offset factor: 0 at face, 1 at side
+    float bevelInsetFactor = surfData.x;
+    float bevelZFactor = surfData.y;
+    float zParam = vertColor.a;     // 0.0 = front, 1.0 = back
+    float halfDepth = targetSize.z * 0.5;
+    float bevelInset = safeBevel * bevelInsetFactor;
+    float bevelZOffset = safeBevel * bevelZFactor;
+    // Z sign: linear in zParam. zParam=0 → +1 (front), zParam=0.5 → 0
+    // (middle, used by the new side-wall middle ring), zParam=1 → -1
+    // (back). Replaces the old step(0.51, zParam) formula — that
+    // snapped 0.5 to "front", which was fine when only front/back
+    // values existed but blocks the middle ring from reaching z=0.
+    // Front-side / front-bevel-outer rings now use z_param=0.0
+    // instead of 0.5 to preserve their +z_edge inflation under the
+    // linear formula. (See generator notes.)
+    float zSign = 1.0 - 2.0 * zParam;
+    // Side wall verts (bevelT == 1.0) sit at z = halfDepth - bevelRadius
+    // and stretch with depth. Front/back face verts (bevelT == 0.0) sit at z = halfDepth.
+    // `(1 - zParam) * frontExtrusion` adds an asymmetric forward shift
+    // that anchors zParam=1 (back) and translates zParam=0 (front) by
+    // the full amount. The middle side-wall ring at zParam=0.5 lands at
+    // the geometric midpoint of the extruded span.
+    float z = (halfDepth - bevelZOffset) * zSign + (1.0 - zParam) * frontExtrusion;
+    // Bevel inset shrinks the XY profile inward (rim verts only)
+    // vertColor.b = 0 for hub verts, 1 for rim — masks out the inset for hubs
+    float isRim = vertColor.b;
+    // Decode the radial direction from the baked UV1 ("TangentBase"), not
+    // localMeshPos.xy. The generator bakes UV1 = (X/2+0.5, Y/2+0.5) where
+    // (X, Y) is the unit-circle profile position pre-rotation. UVs survive
+    // LS's import pipeline unchanged, so this gives a clean, stable radial
+    // direction independent of whatever transforms `localMeshPos` may pick
+    // up on the way to the shader. For hub verts the result is ≈(0,0)
+    // and the `isRim` mask handles them downstream.
+    vec2 insetDir = system.getSurfaceUVCoord1() * 2.0 - 1.0;
+    vec2 xyPos = hubOffset + cornerXY - insetDir * bevelInset * isRim;
+    // Face-projected XY (pre-bevel-inset) normalized to [0, 1]. Identical
+    // for every vertex in the same (X, Y) column — face, bevel, side wall.
+    // Face-projected XY in [0, 1], constant across the bevel arc for a
+    // given (X, Y) column. Used locally by the gradient + edge-mask
+    // compute below. No longer a varying — fragment doesn't need it.
+    vec2 faceUV = (hubOffset + cornerXY) / max(targetSize.xy, vec2(1e-5)) + 0.5;
+    // 7. Final position
+    newPos = vec3(xyPos, z);
+    // 8. Compute normal analytically from pre-baked bevel factors.
+    // The NORMAL angle is read from UV2 ("Normal_Data"), separately from the
+    // POSITION angle (UV0). On bevel-internal verts the generator sets
+    // bevel_t_norm=0.5 so this formula yields the bisector regardless of
+    // where the vert sits in space — gives a flat-shaded chamfer on the
+    // bevel without affecting the face/side-wall verts that share its XYZ.
+    vec2 normalBevel = system.getSurfaceUVCoord2();
+    float sinBA = 1.0 - normalBevel.x;
+    float cosBA = 1.0 - normalBevel.y;
+    vec3 faceN = vec3(0.0, 0.0, zSign);
+    vec3 sideN = vec3(insetDir, 0.);
+    computedNormal = normalize(cosBA * faceN + sinBA * sideN);
+
+    // -----------------------------------------------------------
+    // Face gradient — recreates the reference FloatingMain's compound
+    // look: a directional, corner-to-corner multi-colour band modulated
+    // by a large, far-offset radial glow. Replaces the old centred radial
+    // dome, which read as a small grey blob in the middle of the face.
+    //
+    // dirT — directional band parameter. Axis = a 61° base (matching the
+    //   reference `outlineRotation`) PLUS the `rotation` uniform, so the
+    //   colour band spins around the centre when rotation animates. At rest
+    //   colour runs mostly top→bottom: 0 at the bottom-right corner → 1 at
+    //   the top-left corner (magenta → teal); master0..2 are those corner
+    //   colours. rotation is 0 at idle/hover and steps up on trigger, so a
+    //   press rotates the colours instead of recolouring them.
+    //
+    // domeBright — large, far-offset radial falloff, used as a brightness
+    //   multiplier so the face has a broad off-centre glow instead of a
+    //   centred blob. DOME_CENTER sits off the face and DOME_RADIUS is
+    //   blown up for a gentle, large arc. Tune CENTER / RADIUS / MIN to
+    //   move, size, and deepen the glow.
+    //
+    // accent0..3 paint the rim/bevel highlights along the same axis.
+    // master*/accent* are vec4 from the .mat (alpha unused).
+    // -----------------------------------------------------------
+    const float BAND_BASE_DEG = 61.0; // resting band angle (reference outlineRotation)
+    const vec2  DOME_CENTER = vec2(0.58, -1.); // off-button, below & right of bottom-centre; lower y = transition sits lower on the face
+    const float DOME_RADIUS = 2.;              // large → broad, gentle glow
+    const float DOME_MIN    = 0.175;             // brightness at the far edge (lower = more darkening)
+    const float DOME_EASE   = 1.5;              // >1 = darken slowly near the centre, faster toward the edge
+    vec2 facePos     = faceUV - vec2(0.5);
+    // FACE_ROTATION spins the colour band around the centre — and with it the
+    // trigger spin + the bevel/side 180° offset, which both ride on the band.
+    // The dome darkening is deliberately NOT rotated (domeT reads faceUV
+    // directly), so the glow stays put while the colours turn.
+    // Positive = CCW; flip the sign if it spins the other way.
+    const float FACE_ROTATION = 50.0;
+    float fr     = radians(-FACE_ROTATION);
+    float frc    = cos(fr);
+    float frs    = sin(fr);
+    vec2  rotPos = vec2(frc * facePos.x - frs * facePos.y, frs * facePos.x + frc * facePos.y);
+    // Band axis = base + rotation, so the colours rotate around the centre on
+    // trigger. -x runs the resting band bottom-right (dirT 0) → top-left (1).
+    // Offset the bevel + side-wall band 180° from the front face so their
+    // gradient runs opposite the face (magenta/teal swapped). edgeRegion is
+    // 0 on the flat Z face and 1 on the bevel + side walls (step on
+    // normalBevel.y — the same face/edge split the cursor offset uses). The
+    // trigger spin stays in sync since the 180° offset is constant.
+    float edgeRegion = step(0.1, normalBevel.y);
+    float bandAngle  = radians(BAND_BASE_DEG + rotation + 180.0 * edgeRegion);
+    float bc         = cos(bandAngle);
+    float bs         = sin(bandAngle);
+    float dirT       = clamp(-rotPos.x * bc + rotPos.y * bs + 0.5, 0.0, 1.0);
+    float domeT      = clamp(length(faceUV - DOME_CENTER) / DOME_RADIUS, 0.0, 1.0);
+    float domeBright = mix(1.0, DOME_MIN, pow(domeT, DOME_EASE));
+    vec3 faceColor   = gradient3v(dirT, master0.rgb, master1.rgb, master2.rgb, 0.5) * domeBright;
+
+    // Desaturate toward grey on the flat Z face ONLY. master0.a is a
+    // per-state knob (1 = grey the face, 0 = keep it coloured): idle greys
+    // the main face while the bevel and X/Y side walls keep the full master
+    // colour, so the perimeter stays iridescent at rest; hover/active set
+    // master0.a = 0 so their faces stay coloured. faceRegion is 1 on the flat
+    // face and ramps to 0 across the bevel (bevelZFactor 0 → side 1), so only
+    // the Z face greys — the side faces never do.
+    float faceRegion = 1.0 - clamp(bevelZFactor / 0.15, 0.0, 1.0);
+    float faceLuma   = dot(faceColor, vec3(0.299, 0.587, 0.114));
+    // Idle grey target sits a touch below the face luma so the resting flat
+    // face reads a little deeper. Only the desaturated (idle) face is affected
+    // — colour states (master0.a = 0) and the sides / bevel (faceRegion = 0)
+    // never reach the grey target. Lower = darker idle grey.
+    const float IDLE_GRAY_MULT = 0.8;
+    vertexBaseColor   = mix(faceColor, vec3(faceLuma * IDLE_GRAY_MULT), master0.a * faceRegion);
+    vertexAccentColor = gradient4v(dirT, accent0.rgb, accent1.rgb, accent2.rgb, accent3.rgb, 0.4, 0.6);
+    // Remove the accent rim from the flat Z FACE only: on the flat face
+    // (faceRegion = 1) collapse the accent toward the base colour so the
+    // fragment's rim mix is a no-op there; the bevel + side walls (faceRegion
+    // → 0) keep the real accent. Geometric (all states), no new varying, and
+    // the alpha mask (vertexEdgeMask) is untouched so opacity stays the same.
+    vertexAccentColor = mix(vertexAccentColor, vertexBaseColor, faceRegion);
+
+    // Per-state bevel + face brightness (here in the vertex, not the fragment,
+    // so the bevel lift can scale by state via master0.a — there's no per-
+    // state uniform in the fragment). bevelMask is 1 on the chamfer (normal
+    // tilted ~45°) and 0 on the flat Z face / X/Y side walls. The bevel lift
+    // eases off at idle (master0.a = 1) and is full at hover/active
+    // (master0.a = 0); the face lift is constant. Applied to BOTH colour
+    // varyings so it rides through the fragment's master/accent mix unchanged.
+    const float BEVEL_BRIGHT_HOVER = 0.8;  // bevel lift at hover/active
+    const float BEVEL_IDLE_REDUCE  = 0.5;  // idle bevel lift = hover * (1 - this)
+    const float FACE_BRIGHT        = 1.8;  // flat-face + side-wall lift
+    float nbz        = computedNormal.z;
+    float bevelMaskV = abs(nbz) * sqrt(max(1.0 - nbz * nbz, 0.0)) * 2.0;
+    float bevelLift  = BEVEL_BRIGHT_HOVER * bevelMaskV * (1.0 - master0.a * BEVEL_IDLE_REDUCE);
+    float faceLift   = FACE_BRIGHT * (1.0 - bevelMaskV);
+    float brightLift = 1.0 + bevelLift + faceLift;
+    vertexBaseColor   *= brightLift;
+    vertexAccentColor *= brightLift;
+
+    // -----------------------------------------------------------
+    // Matcap reflection — fully object-space so the matcap stays
+    // anchored to the prism when its Transform rotates.
+    //
+    // Tilt axis: N + 0.286 * objectUp. A fixed up-vector in the
+    // prism's local frame replaces the per-vertex world-space
+    // bitangent. Trade-off: loses the per-vertex swirl around the
+    // bevel rim that mesh-tangent provided, keeps the upward
+    // prismatic sweep, and is rotation-invariant by construction.
+    // -----------------------------------------------------------
+    vec3 cameraOS = (system.getMatrixWorldInverse() * vec4(system.getCameraPosition(), 1.0)).xyz;
+    vec3 viewOS   = normalize(cameraOS - newPos);
+
+    vec3 reflAxis = normalize(computedNormal + 0.286275 * vec3(0.0, 1.0, 0.0));
+    vec3 reflR    = reflect(viewOS, reflAxis);
+    // -x mirrors the matcap horizontally so its orientation matches the
+    // colour band (magenta toward bottom-right) and its trigger spin reads
+    // CCW like the band, instead of fighting it on the flat Z face.
+    vec3 reflRflip = reflR * vec3(-1.0, 1.0, -1.0);
+
+    // Lazarov spherical map, matched to the reference FloatingMain matcap:
+    // a uniform 0.5 scale centered at (0.5, 0.5), rotated around it by
+    // `rotation`. Previously this used a per-region scale (face 2.5 /
+    // bevel-side 1.0) centered at (0, 0.5), which sampled a ~5x wider,
+    // half-tile-X-shifted swath of the texture -- so the same matcap read
+    // as a busier, differently-shaped reflection than the reference.
+    // The reference's static UV offset (~0.4, 0.59) maps to our
+    // baseCursorOffset (.mat); set it there to match the exact highlight.
+    float rxx = reflRflip.x * reflRflip.x;
+    float ryy = reflRflip.y * reflRflip.y;
+    float rzp1 = reflRflip.z + 1.0;
+    float invM = inversesqrt(max(rxx + ryy + rzp1 * rzp1, 1e-5));
+    float matcapScale = 0.5;
+    vec2 q = -reflRflip.xy * invM * matcapScale;
+    // +180 flips the matcap on Z to match the reference's orientation.
+    float ra = radians(rotation + 180.0);
+    float ca = cos(ra);
+    float sa = sin(ra);
+    // 0.5 matcap center + the reference's static (0.4, 0.59) highlight
+    // offset. Needs reflTex wrap = Repeat (like the reference); can move to
+    // baseCursorOffset on the .mat if you'd rather tune it live.
+    reflUV = vec2(q.x * ca - q.y * sa, q.x * sa + q.y * ca) + vec2(0.9, 1.09);
+    // commented out uv scaling for now, bring it back here if we want it
+    // reflUV *= .5;
+    // Cursor-following highlight: shift matcap UV so the bright spot
+    // tracks the interactor hit point. TS smooths in time-domain and
+    // pushes (0,0) when no hover.
+    //
+    // The mesh-baked tangent on the front/back face is rotated 90°
+    // relative to the tangents on bevel + side verts, so the same
+    // cursorOffset add lands on rotated matcap axes there. Apply a 90°
+    // CCW rotation `(x,y) → (-y,x)` on face only — matches the empirical
+    // axis layout (a pure swap was a mirror; we need a rotation since
+    // only one of X/Y also needs its sign flipped).
+    // step(0.1, normalBevel.y): 0 on face, 1 on bevel + side. No
+    // branching cost — `mix` + `step` are 2 ALU each on TBDR.
+    vec2 cursorAdd = mix(vec2(-cursorOffset.y, cursorOffset.x), cursorOffset, step(0.1, normalBevel.y));
+    // baseCursorOffset is a flat global offset (not face/bevel-rotated)
+    // so the designer tunes in final matcap-UV space — what you set is
+    // what you get on every vert.
+    reflUV += cursorAdd + baseCursorOffset;
+
+    // -----------------------------------------------------------
+    // Edge mask (excluding fresnel) — moved from fragment.
+    //
+    // All smoothsteps replaced with linear ramps. Linear functions
+    // interpolate exactly across triangles (no kinks at vertex
+    // positions); smoothstep cubics don't. Trade-off: ramp transitions
+    // are constant-rate instead of S-curve. At the narrow widths used
+    // here (5% / 20% / 4% of bevelT, 80% of dist) the visual difference
+    // is small, and the spatial fidelity is perfect.
+    //
+    // Fresnel is computed per-pixel in the fragment (depends on view
+    // direction). Final mask = max(vertexEdgeMask, fresnel-blend).
+    // -----------------------------------------------------------
+    const float vBevelPeak       = 1.0;
+    const float vBevelOpacity    = 0.75;
+    const float vFaceRimStart    = 0.2;
+    const float vStripeFrontPos  = 0.0;
+    const float vStripeBackPos   = 1.0;
+    const float vStripeHalfWidth = 0.5;
+
+    // bevelStripe: peaked highlight at chamfer middle (quadratic — no
+    // smoothstep so no special handling needed; interpolation between
+    // vertices is linear-of-quadratic, fine for this term).
+    float vBevelStripe = bevelZFactor * (1.0 - bevelZFactor) * vBevelPeak;
+
+    // bevelOpaque: solid coverage across bevel quad. Was two narrow
+    // smoothstep gates; now linear ramps over the same 5% bands.
+    float vBevelOpaque = vBevelOpacity
+                       * clamp(bevelZFactor * 20.0, 0.0, 1.0)
+                       * clamp((1.0 - bevelZFactor) * 20.0, 0.0, 1.0);
+
+    // faceMask: rim band on the face, gated by bevelT≈0. Linear ramps
+    // over `dist*0.5` (the user's tuning) and over the bevel transition.
+    float vFaceMask = clamp((vertColor.b * 0.5 - vFaceRimStart) / (1.0 - vFaceRimStart), 0.0, 1.0)
+                    * clamp(1.0 - bevelZFactor / 0.2, 0.0, 1.0);
+
+    // sideStripe: two-stripe pattern on the side wall, gated by
+    // bevelT≈1. surfPos.z analog at vertex = newPos.z (object space,
+    // post-inflation). With frontExtrusion the side wall is asymmetric:
+    // front edge sits at +(halfDepth - safeBevel + frontExtrusion), back
+    // edge at -(halfDepth - safeBevel). Re-center on the new midpoint
+    // and normalize against the extruded span so the front/back stripes
+    // stay pinned to the front/back edges instead of drifting toward the
+    // (now-shifted) middle.
+    float vSideCenter = frontExtrusion * 0.5;
+    float vSideSpan   = max(targetSize.z - 2.0 * safeBevel + frontExtrusion, 1e-5);
+    float vSideT      = clamp((newPos.z - vSideCenter) / vSideSpan + 0.5, 0.0, 1.0);
+    float vHalfW = max(vStripeHalfWidth, 1e-5);
+    float vFrontT = 1.0 - clamp(abs(vSideT - vStripeFrontPos) / vHalfW, 0.0, 1.0);
+    float vBackT  = 1.0 - clamp(abs(vSideT - vStripeBackPos)  / vHalfW, 0.0, 1.0);
+    float vSideStripe = max(vFrontT * vFrontT, vBackT * vBackT)
+                      * clamp((bevelZFactor - 0.95) / 0.04, 0.0, 1.0);
+
+    vertexEdgeMask = max(max(max(vFaceMask, vSideStripe), vBevelStripe), vBevelOpaque);
+}

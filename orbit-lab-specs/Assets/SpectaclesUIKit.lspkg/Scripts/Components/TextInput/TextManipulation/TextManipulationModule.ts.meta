@@ -1,0 +1,70 @@
+- !<AssetImportMetadata/c18fa926-2af3-862c-4434-8825fc0d6bc7>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9e20985a-9b2c-4007-9cda-12b75bf90fae
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9e20985a-9b2c-4007-9cda-12b75bf90fae
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> d8217d10-5c6a-461e-bf60-e2556abf2369
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/d8217d10-5c6a-461e-bf60-e2556abf2369>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: a77817d4-ccd3-4bea-a4b1-87801c04753c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    _caretColor: false
+    _grabHandleActiveColor: false
+    _grabHandleColor: false
+    _highlightColor: false
+    _interactable: false
+    _isEditable: false
+    _textComponent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - _textComponent: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      _interactable: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      _isEditable: false
+      _caretColor: !<Vec4> {x: 0.317006, y: 0.450004, z: 0.400000, w: 1.000000}
+      _highlightColor: !<Vec4> {x: 0.317998, y: 0.450004, z: 0.396002, w: 0.400000}
+      _grabHandleColor: !<Vec4> {x: 0.333333, y: 0.450980, z: 0.396078, w: 0.400000}
+      _grabHandleActiveColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.400000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.Text _textComponent {"hint":"The Text component to manipulate"}'
+    - // @input AssignableType_1 _interactable
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #94A3B8; font-size: 11px;\">Optional interaction target. If not provided, one is generated internally.</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - // @input bool _isEditable
+    - '// @ui {"hint":"Whether the text can be edited", "widget":"label", "label":"<span style=\"color: #94A3B8; font-size: 11px;\">Controls caret visibility for editable text interactions</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Color Properties</span>"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #94A3B8; font-size: 11px;\">Text manipulation visual colors</span>"}'
+    - '// @input vec4 _caretColor = "{0.317006,0.450004,0.4,1}" {"hint":"Color of the caret.", "widget":"color", "showIf":"_isEditable", "showIfValue":true}'
+    - '// @input vec4 _highlightColor = "{0.317998,0.450004,0.396002,0.4}" {"hint":"Color of selected text highlights.", "widget":"color"}'
+    - '// @input vec4 _grabHandleColor = "{0.333333,0.45098,0.396078,0.4}" {"hint":"Default color of selection grab handles.", "widget":"color"}'
+    - '// @input vec4 _grabHandleActiveColor = "{1,1,1,0.4}" {"hint":"Active hover and drag color of selection grab handles.", "widget":"color"}'

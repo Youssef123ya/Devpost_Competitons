@@ -1,0 +1,15 @@
+{
+  "name": "ghostlight-accessibility-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first accessibility repair workshop for Kiroween 2026.",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "vendor": "node scripts/vendor.mjs"
+  },
+  "dependencies": {"dompurify":"3.4.17"},
+  "devDependencies": {"happy-dom":"21.0.4"},
+  "license": "MIT"
+}

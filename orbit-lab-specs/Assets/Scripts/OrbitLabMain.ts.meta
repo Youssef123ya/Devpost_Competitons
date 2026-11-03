@@ -1,0 +1,70 @@
+- !<AssetImportMetadata/5b8e3d24-1fe5-4e3f-b9f0-64977bba7f3f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 6e7a9c20-be4c-4929-8bae-d9a7d783ce23
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 6e7a9c20-be4c-4929-8bae-d9a7d783ce23
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 06088638-43ab-4dbe-bebf-2fbe678da530
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/06088638-43ab-4dbe-bebf-2fbe678da530>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: ea4ce80e-fc64-4d73-b1be-5bf4d247b000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    alignmentTolerance: false
+    audio: false
+    controlsUI: false
+    debugColliders: false
+    instructionUI: false
+    model: false
+    teachingTilt: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - model: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      instructionUI: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      controlsUI: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      audio: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      alignmentTolerance: !<float> 10.000000
+      teachingTilt: !<float> 18.000000
+      debugColliders: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color:#67E8F9\">Orbit Lab — lesson coordinator</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 model {"hint":"Authored procedural model component"}'
+    - '// @input AssignableType_2 instructionUI {"hint":"Authored passive lesson card"}'
+    - '// @input AssignableType_3 controlsUI {"hint":"Authored passive control card"}'
+    - '// @input AssignableType_4 audio {"hint":"Authored audio controller"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float alignmentTolerance = 10 {"hint":"Illustrative alignment tolerance in degrees, not an astronomical prediction", "widget":"slider", "min":3, "max":15, "step":1}'
+    - '// @input float teachingTilt = 18 {"hint":"Exaggerated teaching tilt used by the switch", "widget":"slider", "min":12, "max":24, "step":1}'
+    - '// @input bool debugColliders {"hint":"Draw interaction colliders for debugging after preview restart"}'
+    - '// @ui {"widget":"group_end"}'
