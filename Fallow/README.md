@@ -37,3 +37,10 @@ Priya, Amina, Leo, and Sam are sample neighbors.
 - Nothing is drag-only. There is no account.
 
 Made for Hyperbloom October, a UI/UX and web design hackathon.
+
+---
+
+## Project gallery
+https://hyperbloom-october.devpost.com/project-gallery
+
+
