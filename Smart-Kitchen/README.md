@@ -294,3 +294,8 @@ credentials. You will need to supply them yourself:
   to build the schema from migrations instead.
 - **`appsettings.json`** — see [Configuration](#configuration).
 - Build output, virtual environments and dependency folders.
+
+---
+
+## Project gallery
+https://volthacks.devpost.com/project-gallery
