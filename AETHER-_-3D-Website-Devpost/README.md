@@ -175,6 +175,6 @@ Source: MIT. Three.js is MIT, © Three.js authors.
 
 ---
 
-##project-gallery
+## Project gallery
 https://3d-websites-hackathon.devpost.com/project-gallery
 
